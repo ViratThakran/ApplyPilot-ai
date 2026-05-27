@@ -6,9 +6,6 @@ import { Sparkles, Github, Twitter, Linkedin } from "lucide-react"
 const footerLinks = {
   product: [
     { name: "Features", href: "#features" },
-    { name: "Resume Builder", href: "/resume/build" },
-    { name: "AI Optimizer", href: "/resume/upload" },
-    { name: "Templates", href: "/resume/templates" },
     { name: "Pricing", href: "#pricing" },
     { name: "How It Works", href: "#how-it-works" },
     { name: "FAQ", href: "#faq" },

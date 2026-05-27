@@ -1,22 +1,12 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Rocket, FileText, Upload, Layout, Sparkles, ChevronDown } from "lucide-react"
+import { Menu, X, Rocket } from "lucide-react"
 import Link from "next/link"
 
 const navLinks = [
   { name: "Product", href: "#features" },
-  { 
-    name: "Resume", 
-    href: "/resume",
-    hasDropdown: true,
-    dropdownItems: [
-      { name: "Build New Resume", href: "/resume/build", icon: FileText, description: "Create from scratch with AI" },
-      { name: "Upload Resume", href: "/resume/upload", icon: Upload, description: "Optimize your existing resume" },
-      { name: "Templates", href: "/resume/templates", icon: Layout, description: "Browse professional designs" },
-    ]
-  },
   { name: "How It Works", href: "#how-it-works" },
   { name: "Success Stories", href: "#testimonials" },
   { name: "Pricing", href: "#pricing" },
@@ -25,8 +15,6 @@ const navLinks = [
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
-  const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,16 +22,6 @@ export function Navbar() {
     }
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setActiveDropdown(null)
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
   return (
@@ -82,77 +60,21 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8" ref={dropdownRef}>
+          <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link, i) => (
               <motion.div
                 key={link.name}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 * i, duration: 0.4 }}
-                className="relative"
-                onMouseEnter={() => link.hasDropdown && setActiveDropdown(link.name)}
-                onMouseLeave={() => setActiveDropdown(null)}
               >
-                {link.hasDropdown ? (
-                  <button
-                    className="relative text-sm font-medium text-[#9CA3AF] hover:text-white transition-colors duration-300 group flex items-center gap-1"
-                  >
-                    {link.name}
-                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === link.name ? 'rotate-180' : ''}`} />
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#00F0FF] transition-all duration-300 group-hover:w-full" />
-                  </button>
-                ) : (
-                  <Link
-                    href={link.href}
-                    className="relative text-sm font-medium text-[#9CA3AF] hover:text-white transition-colors duration-300 group"
-                  >
-                    {link.name}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#00F0FF] transition-all duration-300 group-hover:w-full" />
-                  </Link>
-                )}
-
-                {/* Dropdown Menu */}
-                <AnimatePresence>
-                  {link.hasDropdown && activeDropdown === link.name && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                      className="absolute top-full left-0 mt-2 w-72 rounded-xl glass-strong border border-[var(--border-subtle)] overflow-hidden z-50"
-                    >
-                      <div className="p-2">
-                        {link.dropdownItems?.map((item) => {
-                          const Icon = item.icon
-                          return (
-                            <Link
-                              key={item.name}
-                              href={item.href}
-                              className="flex items-start gap-3 p-3 rounded-lg hover:bg-[rgba(0,240,255,0.05)] transition-colors group/item"
-                            >
-                              <div className="w-10 h-10 rounded-lg bg-[rgba(0,240,255,0.1)] flex items-center justify-center flex-shrink-0 group-hover/item:bg-[rgba(0,240,255,0.2)] transition-colors">
-                                <Icon className="w-5 h-5 text-[#00F0FF]" />
-                              </div>
-                              <div>
-                                <div className="text-sm font-medium text-white">{item.name}</div>
-                                <div className="text-xs text-[#9CA3AF]">{item.description}</div>
-                              </div>
-                            </Link>
-                          )
-                        })}
-                      </div>
-                      <div className="border-t border-[var(--border-subtle)] p-3 bg-[rgba(0,240,255,0.02)]">
-                        <Link
-                          href="/resume"
-                          className="flex items-center gap-2 text-xs text-[#00F0FF] hover:text-white transition-colors"
-                        >
-                          <Sparkles className="w-3 h-3" />
-                          View all resume tools
-                        </Link>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <Link
+                  href={link.href}
+                  className="relative text-sm font-medium text-[#9CA3AF] hover:text-white transition-colors duration-300 group"
+                >
+                  {link.name}
+                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#00F0FF] transition-all duration-300 group-hover:w-full" />
+                </Link>
               </motion.div>
             ))}
           </div>
