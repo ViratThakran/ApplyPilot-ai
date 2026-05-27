@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Rocket, PlayCircle, Send, Sparkles, CheckCircle } from "lucide-react"
+import { Rocket, PlayCircle, Send, Sparkles, CheckCircle, FileText } from "lucide-react"
 import { HeroScene } from "./hero-scene"
+import Link from "next/link"
 
 const companyLogos = ["Google", "Meta", "Amazon", "Netflix", "Spotify"]
 
@@ -84,7 +85,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.1, duration: 0.6 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10"
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-6"
             >
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -101,6 +102,23 @@ export function Hero() {
                 <PlayCircle className="w-5 h-5" />
                 See How It Works
               </motion.button>
+            </motion.div>
+
+            {/* Secondary CTA - Resume Builder */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2, duration: 0.5 }}
+              className="flex items-center justify-center lg:justify-start gap-2 mb-10"
+            >
+              <Link 
+                href="/resume/build"
+                className="inline-flex items-center gap-2 text-sm text-[#9CA3AF] hover:text-[#00F0FF] transition-colors"
+              >
+                <FileText className="w-4 h-4" />
+                <span>Or build your resume with AI</span>
+                <span className="text-[#00F0FF]">→</span>
+              </Link>
             </motion.div>
 
             {/* Trust Bar */}
