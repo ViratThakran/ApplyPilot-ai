@@ -98,7 +98,7 @@ function NeuralNetwork() {
       </Points>
       <lineSegments ref={linesRef} geometry={lineGeometry}>
         <lineBasicMaterial
-          color="#00F0FF"
+          color="#111827"
           transparent
           opacity={0.2}
           blending={THREE.AdditiveBlending}
@@ -126,7 +126,7 @@ function FloatingOrbs() {
         <mesh key={i} position={[i * 2 - 2, 0, -2]}>
           <sphereGeometry args={[0.8, 32, 32]} />
           <meshBasicMaterial
-            color={i === 0 ? "#00F0FF" : i === 1 ? "#8B5CF6" : "#F43F5E"}
+            color={i === 0 ? "#111827" : i === 1 ? "#8B5CF6" : "#F43F5E"}
             transparent
             opacity={0.08}
           />
@@ -152,7 +152,7 @@ export function HeroScene() {
       <div 
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 80% 50% at 70% 40%, rgba(0, 240, 255, 0.12) 0%, transparent 70%)'
+          background: 'radial-gradient(ellipse 80% 50% at 70% 40%, rgba(17,24,39, 0.12) 0%, transparent 70%)'
         }}
       />
     </div>

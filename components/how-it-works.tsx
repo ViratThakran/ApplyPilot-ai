@@ -10,7 +10,7 @@ const steps = [
     icon: Upload,
     title: "Upload Your Profile",
     description: "Drop your resume or LinkedIn. Our AI extracts every skill, achievement, and keyword in seconds.",
-    color: "#00F0FF",
+    color: "#111827",
   },
   {
     num: "02",
@@ -24,7 +24,7 @@ const steps = [
     icon: Send,
     title: "Autonomous Applications",
     description: "Our agent applies to 50-200 matched roles across LinkedIn, Indeed, Greenhouse, Lever, and 40+ other platforms while you sleep.",
-    color: "#00F0FF",
+    color: "#111827",
   },
   {
     num: "04",
@@ -45,11 +45,11 @@ export function HowItWorks() {
   const lineHeight = useTransform(scrollYProgress, [0.1, 0.9], ["0%", "100%"])
 
   return (
-    <section id="how-it-works" className="py-24 md:py-32 relative overflow-hidden bg-[#050505]">
+    <section id="how-it-works" className="py-24 md:py-32 relative overflow-hidden bg-[#F3F4F6]">
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-[#8B5CF6]/5 blur-[150px]" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-[#00F0FF]/5 blur-[150px]" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-[#111827]/5 blur-[150px]" />
       </div>
 
       <div className="container mx-auto px-6 lg:px-8 relative">
@@ -61,10 +61,10 @@ export function HowItWorks() {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#00F0FF] mb-4 block">
+          <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#111827] mb-4 block">
             THE PROCESS
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#F9FAFB] mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             Four Steps to Your Next Role
           </h2>
         </motion.div>
@@ -74,7 +74,7 @@ export function HowItWorks() {
           <div className="absolute left-8 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-px bg-[var(--border-subtle)]">
             <motion.div
               style={{ height: lineHeight }}
-              className="w-full bg-gradient-to-b from-[#00F0FF] via-[#8B5CF6] to-[#10B981]"
+              className="w-full bg-gradient-to-b from-[#111827] via-[#8B5CF6] to-[#10B981]"
             />
           </div>
 
@@ -100,7 +100,7 @@ export function HowItWorks() {
                     <motion.div
                       whileHover={{ y: -4, borderColor: step.color }}
                       transition={{ duration: 0.3 }}
-                      className="bg-[#111118] border border-[var(--border-subtle)] rounded-2xl p-8 relative overflow-hidden group"
+                      className="bg-white border border-[var(--border-subtle)] rounded-2xl p-8 relative overflow-hidden group"
                     >
                       {/* Large background number */}
                       <span 
@@ -111,10 +111,10 @@ export function HowItWorks() {
                       </span>
 
                       <div className="relative">
-                        <h3 className="text-xl md:text-2xl font-bold text-[#F9FAFB] mb-3">
+                        <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
                           {step.num} — {step.title}
                         </h3>
-                        <p className="text-[#9CA3AF] leading-relaxed">{step.description}</p>
+                        <p className="text-gray-500 leading-relaxed">{step.description}</p>
                       </div>
 
                       {/* Hover glow */}

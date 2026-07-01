@@ -1,61 +1,135 @@
-# 🚀 CareerFlow AI
+# ApplyPilot AI
 
-CareerFlow AI is an autonomous job application assistant designed to completely automate your job hunt. Upload your resume once, and our AI agent continuously scans the market, customizes your credentials, and applies for you 24/7.
-
----
-
-## 📸 Website Preview & Interface
-
-<img width="1917" height="1040" alt="image" src="https://github.com/user-attachments/assets/c7ed4cb5-b549-4176-a4e2-133e8b312381" />
-
-
-### 🎛️ User Dashboard
-
-
-*Your central hub to track active job applications, view AI matches, and monitor upcoming interviews in real time.*
-
-### 📝 AI Resume Builder & Editor
-
-
-*The interactive workstation where you can upload existing resumes or use the drag-and-drop interface to lock in your base profile.*
+ApplyPilot AI is an autonomous job application assistant that completely automates your job hunt. Upload your resume once — the AI agent scans the market, customises your credentials for each role, and applies 24/7 while you focus on what matters.
 
 ---
 
-## 🔍 Detailed Feature Breakdown
+## Website Preview
 
-### 1. Build or Upload Resume
-
-Getting started is completely seamless. You can utilize a fluid drag-and-drop builder to construct your profile from scratch, or simply upload your existing resume in PDF or DOCX format. The platform instantly parses your experience, skills, and history to establish your base applicant profile.
-
-### 2. Set Job Preferences
-
-You retain complete control over your career direction. The system allows you to define strict target criteria, including:
-
-* **Target Roles:** Specify exact job titles (e.g., Frontend Engineer, AI Specialist).
-* **Location Preferences:** Filter by remote-only, hybrid, or specific geographic cities.
-* **Salary Requirements:** Set minimum compensation thresholds so you never waste time on underpaying roles.
-
-### 3. 24/7 AI Agent Activation
-
-Once your profile and preferences are locked in, the autonomous AI agent deploys. Operating entirely in the background, it continuously scans over 50 major job boards non-stop. It filters through thousands of listings in seconds, identifying high-compatibility roles the moment they are posted.
-
-### 4. Dynamic Auto-Optimization
-
-Generic applications get filtered out. To solve this, the built-in OpenAI intelligence analyzes the specific keywords, responsibilities, and requirements of every single matching job description. It then dynamically rewrites and tailors your resume for that exact role, maximizing your chances of passing applicant tracking systems (ATS).
-
-### 5. Automated Application Submission
-
-The AI agent handles the tedious paperwork. It automatically fills out application forms, uploads your freshly optimized resume, and submits the tailored package on your behalf—allowing you to apply to dozens of targeted roles while you sleep.
-
-### 6. Automated Recruiter Outreach
-
-Going beyond standard applications, the system actively uncovers the professional email addresses of the relevant hiring managers for your matched roles. It then drafts and transmits highly personalized networking messages and follow-ups to get your profile directly in front of human decision-makers.
+<img width="1917" height="1040" alt="ApplyPilot AI landing page" src="https://github.com/user-attachments/assets/c7ed4cb5-b549-4176-a4e2-133e8b312381" />
 
 ---
 
-## 🛠️ Tech Stack
+## Features
 
-* **Core Framework:** Next.js 14+ & TypeScript
-* **Styling & Presentation:** Tailwind CSS
-* **Visuals & Motion:** Three.js (3D hero sections), GSAP, and Framer Motion
-* **Core Intelligence:** OpenAI API (Powering the resume parsing and optimization engine)
+### 1. Resume Upload & AI Parsing
+Upload an existing PDF or DOCX resume. The AI instantly parses your experience, skills, and history into a structured profile — no manual form-filling.
+
+### 2. Job Preferences
+Set target roles, locations (remote / hybrid / city), minimum salary, and employment type. The agent uses these to filter listings before scoring.
+
+### 3. 24/7 Autonomous Agent
+Once activated, the agent continuously scans job boards (via Adzuna), scores every listing against your profile using keyword + AI deep-match, and queues high-fit roles automatically.
+
+### 4. AI Resume Tailoring
+For every matched role, the AI rewrites your resume to mirror the job description's keywords and responsibilities — maximising ATS pass-through rate. A match score (0–100) and change rationale are returned alongside the tailored version.
+
+### 5. Cover Letter Generation
+One click produces a personalised cover letter for any role, drafted by Gemini and editable before submission.
+
+### 6. Auto-Apply (Greenhouse & Lever)
+For roles hosted on Greenhouse or Lever, the agent submits the application programmatically via their public APIs. For all other boards (LinkedIn, Naukri, Indeed), it preps the tailored resume and marks the application for manual submission.
+
+### 7. HR Outreach
+Hunter.io locates verified hiring-manager emails. Gemini drafts a personalised outreach message. You review and click Send — the email goes via Resend.
+
+### 8. Application Tracker
+A full tracker (Kanban-style status: Draft → Applied → Interviewing → Offer → Rejected) across every application, with outreach status alongside.
+
+### 9. Analytics Dashboard
+Real-time stats: applications sent, response rate, average match score, interviews booked.
+
+### 10. PDF Resume Export
+Download any version of your resume as a formatted PDF directly from the builder.
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router) + TypeScript |
+| Styling | Tailwind CSS v4 + Framer Motion |
+| Auth + DB + Storage | Supabase (Postgres, Auth, Storage + RLS) |
+| AI | Google Gemini `gemini-2.0-flash` |
+| Job Search | Adzuna API |
+| Recruiter Discovery | Hunter.io |
+| Email Delivery | Resend |
+| PDF Export | `@react-pdf/renderer` |
+| Testing | Vitest |
+
+---
+
+## Getting Started
+
+### 1. Clone & install
+
+```bash
+git clone https://github.com/ViratThakran/careerflow-ai.git
+cd careerflow-ai
+npm install
+```
+
+### 2. Environment variables
+
+Copy `.env.local.example` to `.env.local` and fill in your keys:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+GEMINI_API_KEY=
+ADZUNA_APP_ID=
+ADZUNA_APP_KEY=
+HUNTER_API_KEY=
+RESEND_API_KEY=
+RESEND_FROM_EMAIL=
+```
+
+### 3. Run database migrations
+
+Open your Supabase project → SQL Editor, then run these files in order:
+
+1. `supabase/migrations/0001_init.sql`
+2. `supabase/migrations/0002_jobs.sql`
+3. `supabase/migrations/0003_applications.sql`
+
+### 4. Start the dev server
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+---
+
+## Running Tests
+
+```bash
+npm run test
+```
+
+---
+
+## Project Structure
+
+```
+app/
+  api/          → Route handlers (resumes, jobs, applications, outreach)
+  jobs/         → Job search & preferences pages
+  applications/ → Application tracker pages
+  resume/       → Upload, build, tailor, preview pages
+components/
+  dashboard/    → Authenticated shell + workspace sections
+  resume/       → Editor, AI sidebar, section navigator
+  ui/           → shadcn/ui primitives
+lib/
+  ai/           → Gemini helpers (parse, tailor, match, outreach)
+  jobs/         → Adzuna client + keyword scoring
+  ats/          → Greenhouse & Lever submit clients
+  outreach/     → Hunter + Resend clients
+  supabase/     → Browser + server Supabase clients
+supabase/
+  migrations/   → SQL schema files
+```

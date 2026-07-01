@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Check, Zap } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 const plans = [
   {
@@ -21,7 +22,7 @@ const plans = [
   },
   {
     name: "Pro",
-    price: "$49",
+    price: "$39",
     period: "/month",
     description: "For serious job seekers ready to land faster",
     features: [
@@ -35,11 +36,11 @@ const plans = [
     ],
     cta: "Start Free Trial",
     highlighted: true,
-    color: "#00F0FF",
+    color: "#0EA5E9",
   },
   {
     name: "Enterprise",
-    price: "$149",
+    price: "$139",
     period: "/month",
     description: "For teams and career coaches",
     features: [
@@ -57,8 +58,10 @@ const plans = [
 ]
 
 export function Pricing() {
+  const router = useRouter()
+
   return (
-    <section id="pricing" className="py-24 md:py-32 relative overflow-hidden bg-[#050505]">
+    <section id="pricing" className="py-24 md:py-32 relative overflow-hidden bg-[#F3F4F6]">
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#8B5CF6]/5 blur-[150px]" />
@@ -72,13 +75,13 @@ export function Pricing() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#00F0FF] mb-4 block">
+          <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#111827] mb-4 block">
             PRICING
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#F9FAFB] mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             Invest in Your Career
           </h2>
-          <p className="text-[#9CA3AF] max-w-xl mx-auto">
+          <p className="text-gray-500 max-w-xl mx-auto">
             All plans include a 14-day free trial. Cancel anytime.
           </p>
         </motion.div>
@@ -103,21 +106,23 @@ export function Pricing() {
               )}
 
               <motion.div
-                whileHover={{ y: -8, borderColor: `${plan.color}40` }}
+                whileHover={{ y: -8 }}
                 transition={{ duration: 0.3 }}
-                className={`relative h-full bg-[#111118] border rounded-[20px] p-8 flex flex-col ${
-                  plan.highlighted 
-                    ? "border-[rgba(0,240,255,0.3)]" 
-                    : "border-[var(--border-subtle)]"
+                className={`relative h-full border rounded-[20px] p-8 flex flex-col ${
+                  plan.highlighted
+                    ? "bg-[#13131e] border-[rgba(14,165,233,0.3)]"
+                    : "bg-[#1a1a28] border-[rgba(255,255,255,0.08)]"
                 }`}
-                style={{ 
-                  boxShadow: plan.highlighted ? `0 0 60px ${plan.color}15` : undefined 
+                style={{
+                  boxShadow: plan.highlighted
+                    ? "0 0 50px rgba(14,165,233,0.1), 0 0 100px rgba(139,92,246,0.07)"
+                    : "0 4px 24px rgba(0,0,0,0.2)",
                 }}
               >
                 {/* Popular badge */}
                 {plan.highlighted && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-medium bg-[#00F0FF] text-[#050505]">
+                    <span className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-medium bg-gradient-to-r from-[#0EA5E9] to-[#8B5CF6] text-white">
                       <Zap className="w-3 h-3" />
                       Most Popular
                     </span>
@@ -125,28 +130,28 @@ export function Pricing() {
                 )}
 
                 {/* Plan name */}
-                <h3 className="text-lg font-bold text-[#F9FAFB] mb-2">{plan.name}</h3>
-                <p className="text-sm text-[#6B7280] mb-6">{plan.description}</p>
+                <h3 className="text-lg font-bold mb-2 text-white">{plan.name}</h3>
+                <p className="text-sm mb-6 text-[#9CA3AF]">{plan.description}</p>
 
                 {/* Price */}
                 <div className="mb-6">
-                  <span className="text-4xl md:text-5xl font-extrabold text-[#F9FAFB]">
+                  <span className={`text-4xl md:text-5xl font-extrabold ${plan.highlighted ? "gradient-text-cyan-violet" : "text-white"}`}>
                     {plan.price}
                   </span>
-                  <span className="text-[#6B7280]">{plan.period}</span>
+                  <span className="text-[#9CA3AF]">{plan.period}</span>
                 </div>
 
                 {/* Features */}
                 <ul className="space-y-3 mb-8 flex-grow">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-3">
-                      <div 
+                      <div
                         className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-                        style={{ backgroundColor: `${plan.color}15` }}
+                        style={{ backgroundColor: `${plan.color}30` }}
                       >
                         <Check className="w-3 h-3" style={{ color: plan.color }} />
                       </div>
-                      <span className="text-sm text-[#9CA3AF]">{feature}</span>
+                      <span className="text-sm text-[#D1D5DB]">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -155,10 +160,17 @@ export function Pricing() {
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
+                  onClick={() => {
+                    if (plan.cta === "Contact Sales") {
+                      window.location.href = "mailto:sales@applypilot.ai?subject=Enterprise%20plan%20inquiry"
+                    } else {
+                      router.push("/signup")
+                    }
+                  }}
                   className={`w-full py-3.5 rounded-full font-semibold transition-all ${
                     plan.highlighted
-                      ? "bg-[#00F0FF] text-[#050505] shadow-[0_0_30px_rgba(0,240,255,0.4)] hover:shadow-[0_0_40px_rgba(0,240,255,0.5)]"
-                      : "bg-[#1a1a24] text-[#F9FAFB] border border-[var(--border-subtle)] hover:border-[rgba(0,240,255,0.3)]"
+                      ? "bg-gradient-to-r from-[#0EA5E9] to-[#8B5CF6] text-white shadow-[0_0_25px_rgba(14,165,233,0.3)] hover:shadow-[0_0_40px_rgba(14,165,233,0.45)]"
+                      : "bg-white/10 text-white border border-white/15 hover:bg-white/15"
                   }`}
                 >
                   {plan.cta}
@@ -174,7 +186,7 @@ export function Pricing() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className="flex flex-wrap items-center justify-center gap-6 mt-12 text-sm text-[#6B7280]"
+          className="flex flex-wrap items-center justify-center gap-6 mt-12 text-sm text-gray-500"
         >
           <span className="flex items-center gap-2">
             <Check className="w-4 h-4 text-[#10B981]" />

@@ -10,7 +10,7 @@ import {
   Briefcase, GraduationCap, Wrench, X
 } from "lucide-react"
 
-type UploadState = "idle" | "uploading" | "parsing" | "complete"
+type UploadState = "idle" | "uploading" | "parsing" | "complete" | "error"
 
 interface ParsedData {
   personalInfo: { name: string; email: string; phone: string }
@@ -26,6 +26,8 @@ export default function ResumeUploadPage() {
   const [file, setFile] = useState<File | null>(null)
   const [parsedData, setParsedData] = useState<ParsedData | null>(null)
   const [progress, setProgress] = useState(0)
+  const [error, setError] = useState<string | null>(null)
+  const [resumeId, setResumeId] = useState<string | null>(null)
 
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault()
@@ -37,38 +39,51 @@ export default function ResumeUploadPage() {
     }
   }, [])
 
-  const processFile = (file: File) => {
+  const processFile = async (file: File) => {
     setFile(file)
+    setError(null)
     setUploadState("uploading")
-    
-    // Simulate upload progress
-    let currentProgress = 0
-    const uploadInterval = setInterval(() => {
-      currentProgress += 10
-      setProgress(currentProgress)
-      if (currentProgress >= 100) {
-        clearInterval(uploadInterval)
-        setUploadState("parsing")
-        
-        // Simulate AI parsing
-        setTimeout(() => {
-          setParsedData({
-            personalInfo: { name: "John Doe", email: "john@example.com", phone: "(555) 123-4567" },
-            experienceCount: 3,
-            educationCount: 1,
-            skillCount: 12,
-          })
-          setUploadState("complete")
-        }, 2000)
-      }
-    }, 150)
+    setProgress(30)
+
+    try {
+      const formData = new FormData()
+      formData.append("file", file)
+
+      const uploadRes = await fetch("/api/resumes/upload", { method: "POST", body: formData })
+      const uploadData = await uploadRes.json()
+      if (!uploadRes.ok) throw new Error(uploadData.error || "Upload failed")
+
+      setProgress(100)
+      setUploadState("parsing")
+
+      const parseRes = await fetch(`/api/resumes/${uploadData.resumeId}/parse`, { method: "POST" })
+      const parseData = await parseRes.json()
+      if (!parseRes.ok) throw new Error(parseData.error || "Parsing failed")
+
+      const resume = parseData.resume
+      setResumeId(uploadData.resumeId)
+      setParsedData({
+        personalInfo: {
+          name: `${resume.personalInfo.firstName} ${resume.personalInfo.lastName}`.trim(),
+          email: resume.personalInfo.email,
+          phone: resume.personalInfo.phone,
+        },
+        experienceCount: resume.experience.length,
+        educationCount: resume.education.length,
+        skillCount: resume.skills.length,
+      })
+      setUploadState("complete")
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong")
+      setUploadState("error")
+    }
   }
 
   const handleDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault()
     e.stopPropagation()
     setDragActive(false)
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       processFile(e.dataTransfer.files[0])
     }
@@ -85,6 +100,8 @@ export default function ResumeUploadPage() {
     setFile(null)
     setParsedData(null)
     setProgress(0)
+    setError(null)
+    setResumeId(null)
   }
 
   return (
@@ -96,24 +113,24 @@ export default function ResumeUploadPage() {
             className="relative"
             animate={{
               boxShadow: [
-                "0 0 15px rgba(0, 240, 255, 0.2)",
-                "0 0 25px rgba(0, 240, 255, 0.4)",
-                "0 0 15px rgba(0, 240, 255, 0.2)",
+                "0 0 15px rgba(17,24,39, 0.2)",
+                "0 0 25px rgba(17,24,39, 0.4)",
+                "0 0 15px rgba(17,24,39, 0.2)",
               ],
             }}
             transition={{ duration: 3, repeat: Infinity }}
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#00F0FF]">
-              <Rocket className="h-4.5 w-4.5 text-[#050505] rotate-45" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#111827]">
+              <Rocket className="h-4.5 w-4.5 text-white rotate-45" />
             </div>
           </motion.div>
-          <span className="text-lg font-bold tracking-[-0.02em] text-[#F9FAFB]">
-            CareerFlow
+          <span className="text-lg font-bold tracking-[-0.02em] text-gray-900">
+            ApplyPilot
           </span>
         </Link>
         <Link 
           href="/"
-          className="text-sm text-[#9CA3AF] hover:text-white transition-colors flex items-center gap-1"
+          className="text-sm text-gray-500 hover:text-gray-900 transition-colors flex items-center gap-1"
         >
           <ChevronLeft className="w-4 h-4" />
           Back to Home
@@ -128,10 +145,10 @@ export default function ResumeUploadPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-8"
           >
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
               Upload Your Resume
             </h1>
-            <p className="text-[#9CA3AF] text-lg">
+            <p className="text-gray-500 text-lg">
               Let our AI analyze and optimize your existing resume
             </p>
           </motion.div>
@@ -152,8 +169,8 @@ export default function ResumeUploadPage() {
                   onDrop={handleDrop}
                   className={`relative h-80 rounded-2xl border-2 border-dashed transition-all duration-300 ${
                     dragActive
-                      ? "border-[#00F0FF] bg-[rgba(0,240,255,0.05)]"
-                      : "border-[var(--border-subtle)] hover:border-[rgba(0,240,255,0.3)]"
+                      ? "border-[#111827] bg-[rgba(17,24,39,0.05)]"
+                      : "border-[var(--border-subtle)] hover:border-[rgba(17,24,39,0.3)]"
                   }`}
                 >
                   <input
@@ -169,19 +186,19 @@ export default function ResumeUploadPage() {
                       transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                       className={`w-20 h-20 rounded-2xl flex items-center justify-center mb-4 ${
                         dragActive 
-                          ? "bg-[rgba(0,240,255,0.2)]" 
-                          : "bg-[rgba(255,255,255,0.05)]"
+                          ? "bg-[rgba(17,24,39,0.2)]" 
+                          : "bg-[rgba(0,0,0,0.05)]"
                       }`}
                     >
-                      <Upload className={`w-10 h-10 ${dragActive ? "text-[#00F0FF]" : "text-[#6B7280]"}`} />
+                      <Upload className={`w-10 h-10 ${dragActive ? "text-[#111827]" : "text-gray-500"}`} />
                     </motion.div>
-                    <h3 className="text-lg font-semibold text-white mb-2">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
                       Drop your resume here
                     </h3>
-                    <p className="text-sm text-[#6B7280] mb-4">
+                    <p className="text-sm text-gray-500 mb-4">
                       PDF, DOCX, TXT — Max 10MB
                     </p>
-                    <button className="px-6 py-2.5 bg-[rgba(255,255,255,0.05)] border border-[var(--border-subtle)] rounded-full text-sm text-white font-medium hover:bg-[rgba(255,255,255,0.1)] transition-colors">
+                    <button className="px-6 py-2.5 bg-[rgba(0,0,0,0.05)] border border-[var(--border-subtle)] rounded-full text-sm text-gray-900 font-medium hover:bg-[rgba(0,0,0,0.1)] transition-colors">
                       Browse Files
                     </button>
                   </div>
@@ -191,21 +208,21 @@ export default function ResumeUploadPage() {
                 <div className="mt-8">
                   <div className="flex items-center gap-4 mb-6">
                     <div className="flex-1 h-px bg-[var(--border-subtle)]" />
-                    <span className="text-sm text-[#6B7280]">Or import from</span>
+                    <span className="text-sm text-gray-500">Or import from</span>
                     <div className="flex-1 h-px bg-[var(--border-subtle)]" />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <button className="flex items-center justify-center gap-3 p-4 rounded-xl bg-[rgba(255,255,255,0.02)] border border-[var(--border-subtle)] hover:border-[#0A66C2] hover:bg-[rgba(10,102,194,0.1)] transition-all group">
+                    <button className="flex items-center justify-center gap-3 p-4 rounded-xl bg-[rgba(0,0,0,0.02)] border border-[var(--border-subtle)] hover:border-[#0A66C2] hover:bg-[rgba(10,102,194,0.1)] transition-all group">
                       <Linkedin className="w-6 h-6 text-[#0A66C2]" />
-                      <span className="font-medium text-white">LinkedIn</span>
+                      <span className="font-medium text-gray-900">LinkedIn</span>
                     </button>
                     <Link 
                       href="/resume/build"
-                      className="flex items-center justify-center gap-3 p-4 rounded-xl bg-[rgba(255,255,255,0.02)] border border-[var(--border-subtle)] hover:border-[#00F0FF] hover:bg-[rgba(0,240,255,0.05)] transition-all group"
+                      className="flex items-center justify-center gap-3 p-4 rounded-xl bg-[rgba(0,0,0,0.02)] border border-[var(--border-subtle)] hover:border-[#111827] hover:bg-[rgba(17,24,39,0.05)] transition-all group"
                     >
-                      <FileText className="w-6 h-6 text-[#00F0FF]" />
-                      <span className="font-medium text-white">Start Fresh</span>
+                      <FileText className="w-6 h-6 text-[#111827]" />
+                      <span className="font-medium text-gray-900">Start Fresh</span>
                     </Link>
                   </div>
                 </div>
@@ -221,18 +238,18 @@ export default function ResumeUploadPage() {
                 className="bg-[var(--bg-elevated)] rounded-2xl border border-[var(--border-subtle)] p-8"
               >
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-14 h-14 rounded-xl bg-[rgba(0,240,255,0.1)] flex items-center justify-center">
-                    <FileUp className="w-7 h-7 text-[#00F0FF]" />
+                  <div className="w-14 h-14 rounded-xl bg-[rgba(17,24,39,0.1)] flex items-center justify-center">
+                    <FileUp className="w-7 h-7 text-[#111827]" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-white truncate">{file?.name}</h3>
-                    <p className="text-sm text-[#6B7280]">
+                    <h3 className="font-semibold text-gray-900 truncate">{file?.name}</h3>
+                    <p className="text-sm text-gray-500">
                       {(file?.size || 0 / 1024).toFixed(0)} KB
                     </p>
                   </div>
                   <button 
                     onClick={resetUpload}
-                    className="p-2 text-[#6B7280] hover:text-white transition-colors"
+                    className="p-2 text-gray-500 hover:text-gray-900 transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
@@ -241,23 +258,23 @@ export default function ResumeUploadPage() {
                 {/* Progress */}
                 <div className="mb-6">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-[#9CA3AF]">
+                    <span className="text-sm text-gray-500">
                       {uploadState === "uploading" ? "Uploading..." : "AI is parsing your resume..."}
                     </span>
-                    <span className="text-sm font-medium text-[#00F0FF]">
+                    <span className="text-sm font-medium text-[#111827]">
                       {uploadState === "uploading" ? `${progress}%` : ""}
                     </span>
                   </div>
-                  <div className="h-2 bg-[rgba(255,255,255,0.1)] rounded-full overflow-hidden">
+                  <div className="h-2 bg-[rgba(0,0,0,0.1)] rounded-full overflow-hidden">
                     {uploadState === "uploading" ? (
                       <motion.div
-                        className="h-full bg-[#00F0FF] rounded-full"
+                        className="h-full bg-[#111827] rounded-full"
                         initial={{ width: 0 }}
                         animate={{ width: `${progress}%` }}
                       />
                     ) : (
                       <motion.div
-                        className="h-full bg-gradient-to-r from-[#00F0FF] to-[#8B5CF6] rounded-full"
+                        className="h-full bg-gradient-to-r from-[#111827] to-[#8B5CF6] rounded-full"
                         animate={{ 
                           x: ["-100%", "100%"],
                         }}
@@ -276,10 +293,10 @@ export default function ResumeUploadPage() {
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="flex items-center gap-3 p-3 rounded-lg bg-[rgba(0,240,255,0.05)] border border-[rgba(0,240,255,0.1)]"
+                    className="flex items-center gap-3 p-3 rounded-lg bg-[rgba(17,24,39,0.05)] border border-[rgba(17,24,39,0.1)]"
                   >
-                    <Sparkles className="w-5 h-5 text-[#00F0FF] animate-pulse" />
-                    <span className="text-sm text-[#9CA3AF]">
+                    <Sparkles className="w-5 h-5 text-[#111827] animate-pulse" />
+                    <span className="text-sm text-gray-500">
                       Extracting sections, skills, and experience...
                     </span>
                   </motion.div>
@@ -305,8 +322,8 @@ export default function ResumeUploadPage() {
                   >
                     <CheckCircle2 className="w-8 h-8 text-[#10B981]" />
                   </motion.div>
-                  <h3 className="text-xl font-bold text-white mb-2">Resume Parsed Successfully!</h3>
-                  <p className="text-[#9CA3AF]">We found the following information:</p>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Resume Parsed Successfully!</h3>
+                  <p className="text-gray-500">We found the following information:</p>
                 </div>
 
                 {/* Parsed Data Summary */}
@@ -318,8 +335,8 @@ export default function ResumeUploadPage() {
                     className="p-4 rounded-xl bg-[rgba(139,92,246,0.1)] border border-[rgba(139,92,246,0.2)] text-center"
                   >
                     <Briefcase className="w-6 h-6 text-[#8B5CF6] mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-white">{parsedData.experienceCount}</div>
-                    <div className="text-xs text-[#9CA3AF]">Work Experiences</div>
+                    <div className="text-2xl font-bold text-gray-900">{parsedData.experienceCount}</div>
+                    <div className="text-xs text-gray-500">Work Experiences</div>
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -328,18 +345,18 @@ export default function ResumeUploadPage() {
                     className="p-4 rounded-xl bg-[rgba(16,185,129,0.1)] border border-[rgba(16,185,129,0.2)] text-center"
                   >
                     <GraduationCap className="w-6 h-6 text-[#10B981] mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-white">{parsedData.educationCount}</div>
-                    <div className="text-xs text-[#9CA3AF]">Education</div>
+                    <div className="text-2xl font-bold text-gray-900">{parsedData.educationCount}</div>
+                    <div className="text-xs text-gray-500">Education</div>
                   </motion.div>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="p-4 rounded-xl bg-[rgba(0,240,255,0.1)] border border-[rgba(0,240,255,0.2)] text-center"
+                    className="p-4 rounded-xl bg-[rgba(17,24,39,0.1)] border border-[rgba(17,24,39,0.2)] text-center"
                   >
-                    <Wrench className="w-6 h-6 text-[#00F0FF] mx-auto mb-2" />
-                    <div className="text-2xl font-bold text-white">{parsedData.skillCount}</div>
-                    <div className="text-xs text-[#9CA3AF]">Skills</div>
+                    <Wrench className="w-6 h-6 text-[#111827] mx-auto mb-2" />
+                    <div className="text-2xl font-bold text-gray-900">{parsedData.skillCount}</div>
+                    <div className="text-xs text-gray-500">Skills</div>
                   </motion.div>
                 </div>
 
@@ -347,20 +364,42 @@ export default function ResumeUploadPage() {
                 <div className="flex gap-4">
                   <button
                     onClick={resetUpload}
-                    className="flex-1 py-3 rounded-xl border border-[var(--border-subtle)] text-[#9CA3AF] font-medium hover:text-white hover:border-[rgba(255,255,255,0.2)] transition-all"
+                    className="flex-1 py-3 rounded-xl border border-[var(--border-subtle)] text-gray-500 font-medium hover:text-gray-900 hover:border-[rgba(0,0,0,0.2)] transition-all"
                   >
                     Upload Different File
                   </button>
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => router.push("/resume/build")}
-                    className="flex-1 py-3 rounded-xl bg-[#00F0FF] text-[#050505] font-semibold flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(0,240,255,0.5)] transition-all"
+                    onClick={() => router.push(resumeId ? `/resume/build?id=${resumeId}` : "/resume/build")}
+                    className="flex-1 py-3 rounded-xl bg-[#111827] text-white font-semibold flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(17,24,39,0.5)] transition-all"
                   >
                     Continue to Editor
                     <ArrowRight className="w-5 h-5" />
                   </motion.button>
                 </div>
+              </motion.div>
+            )}
+
+            {uploadState === "error" && (
+              <motion.div
+                key="error"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="bg-[var(--bg-elevated)] rounded-2xl border border-[var(--border-subtle)] p-8 text-center"
+              >
+                <div className="w-16 h-16 rounded-full bg-[rgba(239,68,68,0.15)] flex items-center justify-center mx-auto mb-4">
+                  <X className="w-8 h-8 text-red-500" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Upload failed</h3>
+                <p className="text-gray-500 mb-6">{error}</p>
+                <button
+                  onClick={resetUpload}
+                  className="px-6 py-2.5 rounded-xl border border-[var(--border-subtle)] text-gray-900 font-medium hover:bg-[rgba(0,0,0,0.05)] transition-colors"
+                >
+                  Try Again
+                </button>
               </motion.div>
             )}
           </AnimatePresence>

@@ -6,7 +6,7 @@ import { Plus, Minus } from "lucide-react"
 
 const faqs = [
   {
-    question: "How does CareerFlow find and apply to jobs?",
+    question: "How does ApplyPilot find and apply to jobs?",
     answer:
       "Our AI agents scan LinkedIn, Indeed, Glassdoor, company career pages, and 40+ job boards 24/7. For each matching position, we analyze the job requirements, optimize your resume with relevant keywords, generate a tailored cover letter, and submit the complete application—all autonomously.",
   },
@@ -41,10 +41,10 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   return (
-    <section id="faq" className="py-24 md:py-32 relative overflow-hidden bg-[#0a0a0f]">
+    <section id="faq" className="py-24 md:py-32 relative overflow-hidden bg-[#F3F4F6]">
       {/* Background */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-[#00F0FF]/5 blur-[150px]" />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-[#111827]/5 blur-[150px]" />
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-[#8B5CF6]/5 blur-[150px]" />
       </div>
 
@@ -56,10 +56,10 @@ export function FAQ() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#00F0FF] mb-4 block">
+          <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#111827] mb-4 block">
             FAQ
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#F9FAFB] mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             Common Questions
           </h2>
         </motion.div>
@@ -77,23 +77,23 @@ export function FAQ() {
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className={`w-full bg-[#111118] border rounded-xl p-5 text-left flex items-center justify-between transition-all duration-300 ${
+                className={`w-full bg-white border rounded-xl p-5 text-left flex items-center justify-between transition-all duration-300 ${
                   openIndex === index 
-                    ? "border-[rgba(0,240,255,0.3)]" 
-                    : "border-[var(--border-subtle)] hover:border-[rgba(0,240,255,0.2)]"
+                    ? "border-[rgba(17,24,39,0.3)]" 
+                    : "border-[var(--border-subtle)] hover:border-[rgba(17,24,39,0.2)]"
                 }`}
               >
-                <span className="font-medium text-[#F9FAFB] pr-4">{faq.question}</span>
+                <span className="font-medium text-gray-900 pr-4">{faq.question}</span>
                 <motion.div
                   animate={{ rotate: openIndex === index ? 45 : 0 }}
                   transition={{ duration: 0.2 }}
                   className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: openIndex === index ? "rgba(0,240,255,0.1)" : "transparent" }}
+                  style={{ backgroundColor: openIndex === index ? "rgba(17,24,39,0.1)" : "transparent" }}
                 >
                   {openIndex === index ? (
-                    <Minus className="w-4 h-4 text-[#00F0FF]" />
+                    <Minus className="w-4 h-4 text-[#111827]" />
                   ) : (
-                    <Plus className="w-4 h-4 text-[#9CA3AF]" />
+                    <Plus className="w-4 h-4 text-gray-500" />
                   )}
                 </motion.div>
               </button>
@@ -106,7 +106,7 @@ export function FAQ() {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <div className="px-5 py-4 text-[#9CA3AF] leading-relaxed">
+                    <div className="px-5 py-4 text-gray-500 leading-relaxed">
                       {faq.answer}
                     </div>
                   </motion.div>

@@ -151,7 +151,7 @@ export const defaultResume: Resume = {
   createdAt: new Date(),
   updatedAt: new Date(),
   templateId: "modern-1",
-  accentColor: "#00F0FF",
+  accentColor: "#111827",
   personalInfo: {
     firstName: "",
     lastName: "",

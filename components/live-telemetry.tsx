@@ -90,20 +90,20 @@ export function LiveTelemetry() {
       case "success": return "#10B981"
       case "warning": return "#D4AF37"
       case "action": return "#8B5CF6"
-      default: return "#00F0FF"
+      default: return "#111827"
     }
   }
 
   return (
-    <section ref={sectionRef} className="py-24 md:py-32 relative overflow-hidden bg-[#050505]">
+    <section ref={sectionRef} className="py-24 md:py-32 relative overflow-hidden bg-[#F3F4F6]">
       {/* Background grid */}
       <div className="absolute inset-0 opacity-[0.02]">
         <div 
           className="absolute inset-0"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+              linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)
             `,
             backgroundSize: '40px 40px'
           }}
@@ -118,10 +118,10 @@ export function LiveTelemetry() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#00F0FF] mb-4 block cursor-blink">
+          <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#111827] mb-4 block cursor-blink">
             LIVE OPERATIONS
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#F9FAFB] mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             See the Agent in Action
           </h2>
         </motion.div>
@@ -136,16 +136,16 @@ export function LiveTelemetry() {
             transition={{ delay: 0.2 }}
             className="lg:col-span-3"
           >
-            <div className="bg-[#111118] border border-[var(--border-subtle)] rounded-xl overflow-hidden">
+            <div className="bg-[#0d0d14] border border-[rgba(255,255,255,0.08)] rounded-xl overflow-hidden shadow-[0_0_40px_rgba(14,165,233,0.08)]">
               {/* macOS-style header */}
-              <div className="flex items-center gap-2 px-4 py-3 bg-[#0a0a0f] border-b border-[var(--border-subtle)]">
+              <div className="flex items-center gap-2 px-4 py-3 bg-[#16161f] border-b border-[rgba(255,255,255,0.06)]">
                 <div className="flex gap-2">
                   <div className="w-3 h-3 rounded-full bg-[#F43F5E]" />
                   <div className="w-3 h-3 rounded-full bg-[#D4AF37]" />
                   <div className="w-3 h-3 rounded-full bg-[#10B981]" />
                 </div>
-                <span className="ml-3 text-xs font-mono text-[#6B7280]">
-                  careerflow-agent — zsh
+                <span className="ml-3 text-xs font-mono text-[#4B5563]">
+                  applypilot-agent — zsh
                 </span>
                 <div className="ml-auto flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-[#10B981] pulse-dot" />
@@ -156,7 +156,7 @@ export function LiveTelemetry() {
               {/* Terminal content */}
               <div
                 ref={containerRef}
-                className="p-4 h-[400px] overflow-y-auto font-mono text-sm hide-scrollbar"
+                className="p-4 h-[400px] overflow-y-auto font-mono text-sm hide-scrollbar bg-[#0d0d14]"
               >
                 {logs.map((log, index) => (
                   <motion.div
@@ -165,8 +165,8 @@ export function LiveTelemetry() {
                     animate={{ opacity: 1, x: 0 }}
                     className="flex gap-2 mb-2"
                   >
-                    <span className="text-[#00F0FF] shrink-0">[{log.timestamp}]</span>
-                    <span className="text-[#F9FAFB]">
+                    <span className="text-[#4B5563] shrink-0">[{log.timestamp}]</span>
+                    <span className="text-[#E5E7EB]">
                       {index === logs.length - 1 && isMounted ? (
                         <TypewriterText text={log.message} color={getTypeColor(log.type)} />
                       ) : (
@@ -179,8 +179,8 @@ export function LiveTelemetry() {
                   </motion.div>
                 ))}
                 {isMounted && (
-                  <div className="flex items-center gap-2 text-[#6B7280] mt-2">
-                    <span className="animate-pulse text-[#00F0FF]">▌</span>
+                  <div className="flex items-center gap-2 mt-2">
+                    <span className="animate-pulse text-[#0EA5E9]">▌</span>
                   </div>
                 )}
               </div>
@@ -198,25 +198,25 @@ export function LiveTelemetry() {
             {/* Today's Applications */}
             <div className="glass rounded-xl p-5">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-[#6B7280]">Today&apos;s Applications</span>
+                <span className="text-sm text-gray-500">Today&apos;s Applications</span>
                 <span className="flex items-center gap-1 text-xs text-[#10B981]">
                   <ArrowUp className="w-3 h-3" />
                   +12%
                 </span>
               </div>
-              <CountUpNumber value={47} className="text-4xl font-bold text-[#F9FAFB]" />
+              <CountUpNumber value={47} className="text-4xl font-bold text-gray-900" />
             </div>
 
             {/* Response Rate Gauge */}
             <div className="glass rounded-xl p-5">
-              <span className="text-sm text-[#6B7280] block mb-3">Response Rate</span>
+              <span className="text-sm text-gray-500 block mb-3">Response Rate</span>
               <div className="flex items-center gap-4">
                 <div className="relative w-20 h-20">
                   <svg className="w-20 h-20 -rotate-90" viewBox="0 0 36 36">
                     <circle cx="18" cy="18" r="14" fill="none" stroke="#111118" strokeWidth="3" />
                     <motion.circle 
                       cx="18" cy="18" r="14" fill="none" 
-                      stroke="#00F0FF"
+                      stroke="#111827"
                       strokeWidth="3" 
                       strokeLinecap="round"
                       strokeDasharray="88"
@@ -226,7 +226,7 @@ export function LiveTelemetry() {
                       transition={{ duration: 1.5, delay: 0.5 }}
                     />
                   </svg>
-                  <span className="absolute inset-0 flex items-center justify-center text-lg font-bold text-[#00F0FF]">
+                  <span className="absolute inset-0 flex items-center justify-center text-lg font-bold text-[#111827]">
                     23%
                   </span>
                 </div>
@@ -235,10 +235,10 @@ export function LiveTelemetry() {
 
             {/* Active Campaigns */}
             <div className="glass rounded-xl p-5">
-              <span className="text-sm text-[#6B7280] block mb-3">Active Campaigns</span>
+              <span className="text-sm text-gray-500 block mb-3">Active Campaigns</span>
               <div className="flex flex-wrap gap-2">
                 {["Product Manager", "Software Engineer", "Data Scientist"].map((role) => (
-                  <span key={role} className="text-xs px-3 py-1.5 rounded-full bg-[#111118] text-[#F9FAFB] border border-[var(--border-subtle)]">
+                  <span key={role} className="text-xs px-3 py-1.5 rounded-full bg-white text-gray-900 border border-[var(--border-subtle)]">
                     {role}
                   </span>
                 ))}
@@ -247,7 +247,7 @@ export function LiveTelemetry() {
 
             {/* Weekly Chart */}
             <div className="glass rounded-xl p-5">
-              <span className="text-sm text-[#6B7280] block mb-3">Success Timeline (7 days)</span>
+              <span className="text-sm text-gray-500 block mb-3">Success Timeline (7 days)</span>
               <div className="flex items-end gap-2 h-16">
                 {[35, 48, 42, 55, 38, 62, 47].map((value, i) => (
                   <motion.div
@@ -256,7 +256,7 @@ export function LiveTelemetry() {
                     whileInView={{ height: `${(value / 62) * 100}%` }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
-                    className="flex-1 bg-gradient-to-t from-[#00F0FF]/50 to-[#00F0FF] rounded-sm"
+                    className="flex-1 bg-gradient-to-t from-[#111827]/50 to-[#374151] rounded-sm"
                   />
                 ))}
               </div>

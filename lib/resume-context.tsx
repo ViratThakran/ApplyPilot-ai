@@ -37,6 +37,10 @@ interface ResumeContextType {
   setIsAIAssistantOpen: (open: boolean) => void
   isSaving: boolean
   lastSaved: Date | null
+  resumeId: string | null
+  isLoadingResume: boolean
+  loadError: string | null
+  loadResume: (id: string) => Promise<void>
 }
 
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined)
@@ -151,23 +155,57 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
   const [isAIAssistantOpen, setIsAIAssistantOpen] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [lastSaved, setLastSaved] = useState<Date | null>(null)
+  const [resumeId, setResumeId] = useState<string | null>(null)
+  const [isLoadingResume, setIsLoadingResume] = useState(false)
+  const [loadError, setLoadError] = useState<string | null>(null)
 
   const atsScore = calculateATSScore(resume)
   const suggestions = generateSuggestions(resume)
 
-  // Auto-save effect
+  const loadResume = useCallback(async (id: string) => {
+    setIsLoadingResume(true)
+    setLoadError(null)
+    try {
+      const res = await fetch(`/api/resumes/${id}`)
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || "Failed to load resume")
+      if (!data.resume.parsed_json) throw new Error("Resume is still being parsed")
+
+      const parsed = data.resume.parsed_json as Resume
+      setResumeState({
+        ...parsed,
+        createdAt: new Date(parsed.createdAt),
+        updatedAt: new Date(parsed.updatedAt),
+      })
+      setResumeId(id)
+    } catch (err) {
+      setLoadError(err instanceof Error ? err.message : "Failed to load resume")
+    } finally {
+      setIsLoadingResume(false)
+    }
+  }, [])
+
+  // Auto-save: persists to the backend once a resume has been loaded from/saved to the
+  // server (resumeId set); otherwise this is a local-only draft (e.g. "Start Fresh").
   useEffect(() => {
+    if (!resumeId) return
+
     const saveTimeout = setTimeout(() => {
       setIsSaving(true)
-      // Simulate save
-      setTimeout(() => {
-        setIsSaving(false)
-        setLastSaved(new Date())
-      }, 500)
+      fetch(`/api/resumes/${resumeId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ resume }),
+      })
+        .catch(() => {})
+        .finally(() => {
+          setIsSaving(false)
+          setLastSaved(new Date())
+        })
     }, 2000)
 
     return () => clearTimeout(saveTimeout)
-  }, [resume])
+  }, [resume, resumeId])
 
   const setResume = useCallback((newResume: Resume) => {
     setResumeState(newResume)
@@ -391,6 +429,10 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
         setIsAIAssistantOpen,
         isSaving,
         lastSaved,
+        resumeId,
+        isLoadingResume,
+        loadError,
+        loadResume,
       }}
     >
       {children}

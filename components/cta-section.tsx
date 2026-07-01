@@ -67,7 +67,7 @@ export function CTASection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4"
+              className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4"
             >
               Ready to Accelerate Your Career?
             </motion.h2>
@@ -76,9 +76,9 @@ export function CTASection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="text-white/80 text-lg max-w-2xl mx-auto mb-8"
+              className="text-gray-900/80 text-lg max-w-2xl mx-auto mb-8"
             >
-              Join thousands of professionals who are landing their dream jobs faster with CareerFlow AI.
+              Join thousands of professionals who are landing their dream jobs faster with ApplyPilot AI.
               Start your free trial today.
             </motion.p>
 
@@ -95,7 +95,7 @@ export function CTASection() {
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 bg-white/10 border-white/20 text-white placeholder:text-white/50 focus:border-white/40 h-12"
+                className="flex-1 bg-white/10 border-white/20 text-gray-900 placeholder:text-gray-900/50 focus:border-white/40 h-12"
                 required
               />
               <Button
@@ -122,7 +122,7 @@ export function CTASection() {
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.5 }}
-              className="text-white/60 text-sm mt-4"
+              className="text-gray-900/60 text-sm mt-4"
             >
               No credit card required. 14-day free trial.
             </motion.p>

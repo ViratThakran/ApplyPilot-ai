@@ -17,7 +17,7 @@ const templates = [
     atsScore: 98,
     rating: 4.9,
     users: "24K+",
-    colors: ["#00F0FF", "#8B5CF6", "#10B981"],
+    colors: ["#111827", "#8B5CF6", "#10B981"],
     bestFor: "Tech, Startups, Design",
     features: ["ATS-Optimized", "1-2 Pages", "Clean Layout"],
   },
@@ -50,7 +50,7 @@ const templates = [
     atsScore: 97,
     rating: 4.9,
     users: "31K+",
-    colors: ["#00F0FF", "#10B981", "#3B82F6"],
+    colors: ["#111827", "#10B981", "#3B82F6"],
     bestFor: "Engineering, DevOps, Data",
     features: ["ATS-Optimized", "Skills Grid", "Project Section"],
   },
@@ -118,20 +118,20 @@ export default function TemplatesPage() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#00F0FF]">
-                <Rocket className="h-4.5 w-4.5 text-[#050505] rotate-45" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#111827]">
+                <Rocket className="h-4.5 w-4.5 text-white rotate-45" />
               </div>
-              <span className="text-lg font-bold text-[#F9FAFB]">CareerFlow</span>
+              <span className="text-lg font-bold text-gray-900">ApplyPilot</span>
             </Link>
-            <div className="hidden md:flex items-center gap-2 text-sm text-[#9CA3AF]">
-              <Link href="/" className="hover:text-white transition-colors">Home</Link>
+            <div className="hidden md:flex items-center gap-2 text-sm text-gray-500">
+              <Link href="/" className="hover:text-gray-900 transition-colors">Home</Link>
               <span>/</span>
-              <span className="text-[#00F0FF]">Templates</span>
+              <span className="text-[#111827]">Templates</span>
             </div>
           </div>
           <Link 
             href="/resume/build"
-            className="px-5 py-2 bg-[#00F0FF] text-[#050505] rounded-full font-semibold text-sm hover:shadow-[0_0_30px_rgba(0,240,255,0.5)] transition-all"
+            className="px-5 py-2 bg-[#111827] text-white rounded-full font-semibold text-sm hover:shadow-[0_0_30px_rgba(17,24,39,0.5)] transition-all"
           >
             Start Building
           </Link>
@@ -143,7 +143,7 @@ export default function TemplatesPage() {
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-5xl font-bold text-white mb-4"
+          className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
         >
           Professional Resume Templates
         </motion.h1>
@@ -151,7 +151,7 @@ export default function TemplatesPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-lg text-[#9CA3AF] max-w-2xl mx-auto"
+          className="text-lg text-gray-500 max-w-2xl mx-auto"
         >
           Choose from our collection of ATS-optimized templates designed by career experts
         </motion.p>
@@ -166,8 +166,8 @@ export default function TemplatesPage() {
               onClick={() => setActiveCategory(category)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                 activeCategory === category
-                  ? "bg-[#00F0FF] text-[#050505]"
-                  : "bg-[rgba(255,255,255,0.05)] text-[#9CA3AF] hover:text-white hover:bg-[rgba(255,255,255,0.1)]"
+                  ? "bg-[#111827] text-white"
+                  : "bg-[rgba(0,0,0,0.05)] text-gray-500 hover:text-gray-900 hover:bg-[rgba(0,0,0,0.1)]"
               }`}
             >
               {category}
@@ -195,10 +195,10 @@ export default function TemplatesPage() {
               >
                 <div 
                   onClick={() => setSelectedTemplate(template)}
-                  className="bg-[var(--bg-elevated)] rounded-2xl border border-[var(--border-subtle)] overflow-hidden cursor-pointer hover:border-[#00F0FF] transition-all hover:shadow-[0_0_40px_rgba(0,240,255,0.15)]"
+                  className="bg-[var(--bg-elevated)] rounded-2xl border border-[var(--border-subtle)] overflow-hidden cursor-pointer hover:border-[#111827] transition-all hover:shadow-[0_0_40px_rgba(17,24,39,0.15)]"
                 >
                   {/* Preview */}
-                  <div className="aspect-[3/4] bg-gradient-to-b from-[rgba(255,255,255,0.02)] to-transparent p-4 relative">
+                  <div className="aspect-[3/4] bg-gradient-to-b from-[rgba(0,0,0,0.02)] to-transparent p-4 relative">
                     {/* Simplified resume preview */}
                     <div className="w-full h-full bg-white rounded-lg p-3 shadow-xl">
                       <div className="flex items-center gap-2 mb-3">
@@ -230,16 +230,16 @@ export default function TemplatesPage() {
 
                     {/* Hover Overlay */}
                     <div className="absolute inset-0 bg-[rgba(0,0,0,0.7)] opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                      <button className="px-4 py-2 bg-[#00F0FF] text-[#050505] rounded-lg font-medium text-sm flex items-center gap-1.5">
+                      <button className="px-4 py-2 bg-[#111827] text-white rounded-lg font-medium text-sm flex items-center gap-1.5">
                         <Eye className="w-4 h-4" />
                         Preview
                       </button>
-                      <button 
+                      <button
                         onClick={(e) => {
                           e.stopPropagation()
-                          router.push("/resume/build")
+                          router.push(`/resume/build?templateId=${template.id}&accentColor=${encodeURIComponent(template.colors[0])}`)
                         }}
-                        className="px-4 py-2 bg-white text-[#050505] rounded-lg font-medium text-sm"
+                        className="px-4 py-2 bg-white text-white rounded-lg font-medium text-sm"
                       >
                         Use Template
                       </button>
@@ -250,16 +250,16 @@ export default function TemplatesPage() {
                   <div className="p-4">
                     <div className="flex items-start justify-between mb-2">
                       <div>
-                        <h3 className="font-semibold text-white">{template.name}</h3>
-                        <p className="text-xs text-[#6B7280]">{template.category}</p>
+                        <h3 className="font-semibold text-gray-900">{template.name}</h3>
+                        <p className="text-xs text-gray-500">{template.category}</p>
                       </div>
                       <div className="flex items-center gap-1 text-xs">
                         <Star className="w-3.5 h-3.5 text-[#D4AF37] fill-[#D4AF37]" />
-                        <span className="text-white">{template.rating}</span>
+                        <span className="text-gray-900">{template.rating}</span>
                       </div>
                     </div>
                     <div className="flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-1 text-[#6B7280]">
+                      <div className="flex items-center gap-1 text-gray-500">
                         <Users className="w-3.5 h-3.5" />
                         {template.users} users
                       </div>
@@ -267,7 +267,7 @@ export default function TemplatesPage() {
                         template.atsScore >= 95 
                           ? "bg-[rgba(16,185,129,0.2)] text-[#10B981]"
                           : template.atsScore >= 90
-                          ? "bg-[rgba(0,240,255,0.2)] text-[#00F0FF]"
+                          ? "bg-[rgba(17,24,39,0.2)] text-[#111827]"
                           : "bg-[rgba(245,158,11,0.2)] text-[#F59E0B]"
                       }`}>
                         {template.atsScore}% ATS
@@ -300,7 +300,7 @@ export default function TemplatesPage() {
             >
               <div className="flex flex-col md:flex-row h-full">
                 {/* Preview */}
-                <div className="flex-1 bg-gradient-to-b from-[rgba(255,255,255,0.02)] to-transparent p-8 flex items-center justify-center">
+                <div className="flex-1 bg-gradient-to-b from-[rgba(0,0,0,0.02)] to-transparent p-8 flex items-center justify-center">
                   <div className="w-full max-w-xs bg-white rounded-lg p-4 shadow-2xl aspect-[3/4]">
                     <div className="flex items-center gap-3 mb-4">
                       <div 
@@ -337,41 +337,41 @@ export default function TemplatesPage() {
                 <div className="w-full md:w-80 p-6 border-t md:border-t-0 md:border-l border-[var(--border-subtle)]">
                   <button
                     onClick={() => setSelectedTemplate(null)}
-                    className="absolute top-4 right-4 p-2 text-[#6B7280] hover:text-white transition-colors"
+                    className="absolute top-4 right-4 p-2 text-gray-500 hover:text-gray-900 transition-colors"
                   >
                     <X className="w-5 h-5" />
                   </button>
 
-                  <h2 className="text-2xl font-bold text-white mb-2">{selectedTemplate.name}</h2>
-                  <p className="text-[#9CA3AF] mb-6">Best for: {selectedTemplate.bestFor}</p>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">{selectedTemplate.name}</h2>
+                  <p className="text-gray-500 mb-6">Best for: {selectedTemplate.bestFor}</p>
 
                   {/* Stats */}
                   <div className="grid grid-cols-3 gap-3 mb-6">
                     <div className="text-center">
-                      <div className="text-lg font-bold text-[#00F0FF]">{selectedTemplate.atsScore}%</div>
-                      <div className="text-xs text-[#6B7280]">ATS Score</div>
+                      <div className="text-lg font-bold text-[#111827]">{selectedTemplate.atsScore}%</div>
+                      <div className="text-xs text-gray-500">ATS Score</div>
                     </div>
                     <div className="text-center">
                       <div className="flex items-center justify-center gap-1">
                         <Star className="w-4 h-4 text-[#D4AF37] fill-[#D4AF37]" />
-                        <span className="text-lg font-bold text-white">{selectedTemplate.rating}</span>
+                        <span className="text-lg font-bold text-gray-900">{selectedTemplate.rating}</span>
                       </div>
-                      <div className="text-xs text-[#6B7280]">Rating</div>
+                      <div className="text-xs text-gray-500">Rating</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-lg font-bold text-white">{selectedTemplate.users}</div>
-                      <div className="text-xs text-[#6B7280]">Users</div>
+                      <div className="text-lg font-bold text-gray-900">{selectedTemplate.users}</div>
+                      <div className="text-xs text-gray-500">Users</div>
                     </div>
                   </div>
 
                   {/* Features */}
                   <div className="mb-6">
-                    <h4 className="text-sm font-medium text-[#9CA3AF] mb-3">Features</h4>
+                    <h4 className="text-sm font-medium text-gray-500 mb-3">Features</h4>
                     <div className="space-y-2">
                       {selectedTemplate.features.map((feature) => (
                         <div key={feature} className="flex items-center gap-2">
                           <Check className="w-4 h-4 text-[#10B981]" />
-                          <span className="text-sm text-white">{feature}</span>
+                          <span className="text-sm text-gray-900">{feature}</span>
                         </div>
                       ))}
                     </div>
@@ -379,7 +379,7 @@ export default function TemplatesPage() {
 
                   {/* Colors */}
                   <div className="mb-6">
-                    <h4 className="text-sm font-medium text-[#9CA3AF] mb-3">Color Variants</h4>
+                    <h4 className="text-sm font-medium text-gray-500 mb-3">Color Variants</h4>
                     <div className="flex gap-2">
                       {selectedTemplate.colors.map((color) => (
                         <div
@@ -396,13 +396,17 @@ export default function TemplatesPage() {
                     <motion.button
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      onClick={() => router.push("/resume/build")}
-                      className="w-full py-3 bg-[#00F0FF] text-[#050505] rounded-xl font-semibold flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(0,240,255,0.5)] transition-all"
+                      onClick={() =>
+                        router.push(
+                          `/resume/build?templateId=${selectedTemplate.id}&accentColor=${encodeURIComponent(selectedTemplate.colors[0])}`
+                        )
+                      }
+                      className="w-full py-3 bg-[#111827] text-white rounded-xl font-semibold flex items-center justify-center gap-2 hover:shadow-[0_0_30px_rgba(17,24,39,0.5)] transition-all"
                     >
                       <Sparkles className="w-5 h-5" />
                       Use This Template
                     </motion.button>
-                    <button className="w-full py-3 border border-[var(--border-subtle)] text-[#9CA3AF] rounded-xl font-medium hover:text-white hover:border-[rgba(255,255,255,0.2)] transition-all flex items-center justify-center gap-2">
+                    <button className="w-full py-3 border border-[var(--border-subtle)] text-gray-500 rounded-xl font-medium hover:text-gray-900 hover:border-[rgba(0,0,0,0.2)] transition-all flex items-center justify-center gap-2">
                       <Download className="w-4 h-4" />
                       Download Preview
                     </button>

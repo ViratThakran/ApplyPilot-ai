@@ -2,12 +2,12 @@
 
 import { useEffect, useState, useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { 
-  Bot, 
-  ToggleRight, 
-  Gauge, 
-  Crosshair, 
-  Filter, 
+import {
+  Bot,
+  ToggleRight,
+  Gauge,
+  Crosshair,
+  Filter,
   Mail,
   Check
 } from "lucide-react"
@@ -19,7 +19,7 @@ const features = [
     title: "24/7 Autonomous Agent",
     description: "Works while you sleep. Monitors job boards, analyzes postings, and executes applications without human intervention.",
     span: "md:col-span-2 md:row-span-2",
-    color: "#00F0FF",
+    color: "#0EA5E9",
     hasTerminal: true,
   },
   {
@@ -50,7 +50,7 @@ const features = [
     description: "Not just keyword matching. Our AI understands role context, company stage, and culture fit.",
     tags: ["Semantic Analysis", "Culture Fit", "Growth Stage"],
     span: "md:col-span-2",
-    color: "#00F0FF",
+    color: "#EC4899",
   },
   {
     id: "filter",
@@ -120,7 +120,7 @@ function FeatureCard({ feature, index }: { feature: typeof features[0]; index: n
       <motion.div
         whileHover={{ y: -6, borderColor: `${feature.color}40` }}
         transition={{ duration: 0.3 }}
-        className="h-full bg-[#111118] border border-[var(--border-subtle)] rounded-[20px] p-8 relative overflow-hidden"
+        className="h-full bg-white border border-[var(--border-subtle)] rounded-[20px] p-8 relative overflow-hidden"
         style={{ boxShadow: "0 0 0 0 transparent" }}
         onMouseEnter={(e) => {
           e.currentTarget.style.boxShadow = `0 24px 48px rgba(0,0,0,0.5), 0 0 30px ${feature.color}15`
@@ -130,7 +130,7 @@ function FeatureCard({ feature, index }: { feature: typeof features[0]; index: n
         }}
       >
         {/* Hover gradient */}
-        <div 
+        <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
           style={{
             background: `radial-gradient(circle at 30% 30%, ${feature.color}08 0%, transparent 60%)`
@@ -139,7 +139,7 @@ function FeatureCard({ feature, index }: { feature: typeof features[0]; index: n
 
         <div className="relative">
           {/* Icon */}
-          <div 
+          <div
             className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
             style={{ backgroundColor: `${feature.color}15` }}
           >
@@ -147,23 +147,23 @@ function FeatureCard({ feature, index }: { feature: typeof features[0]; index: n
           </div>
 
           {/* Title */}
-          <h3 className="text-lg md:text-xl font-bold text-[#F9FAFB] mb-2">
+          <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
             {feature.title}
           </h3>
 
           {/* Description */}
-          <p className="text-[#9CA3AF] text-sm leading-relaxed mb-4">
+          <p className="text-gray-500 text-sm leading-relaxed mb-4">
             {feature.description}
           </p>
 
           {/* Terminal for Agent card */}
           {feature.hasTerminal && (
-            <div className="mt-6 bg-[#0a0a0f] rounded-lg p-4 border border-[var(--border-subtle)]">
+            <div className="mt-6 bg-[#0d0d14] rounded-lg p-4 border border-[rgba(255,255,255,0.07)]">
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-2.5 h-2.5 rounded-full bg-[#F43F5E]" />
                 <div className="w-2.5 h-2.5 rounded-full bg-[#D4AF37]" />
                 <div className="w-2.5 h-2.5 rounded-full bg-[#10B981]" />
-                <span className="text-xs text-[#6B7280] ml-2 font-mono">agent.log</span>
+                <span className="text-xs text-[#4B5563] ml-2 font-mono">agent.log</span>
               </div>
               <div className="space-y-1.5 font-mono text-xs">
                 {terminalLines.map((line, i) => (
@@ -174,12 +174,12 @@ function FeatureCard({ feature, index }: { feature: typeof features[0]; index: n
                     transition={{ delay: 0.8 + i * 0.2 }}
                     className="text-[#9CA3AF]"
                   >
-                    <span className="text-[#00F0FF]">{line.substring(0, 11)}</span>
+                    <span className="text-[#4B5563]">{line.substring(0, 11)}</span>
                     {line.substring(11)}
                   </motion.div>
                 ))}
               </div>
-              <div className="flex items-center gap-2 mt-3 pt-3 border-t border-[var(--border-subtle)]">
+              <div className="flex items-center gap-2 mt-3 pt-3 border-t border-[rgba(255,255,255,0.07)]">
                 <span className="w-2 h-2 rounded-full bg-[#10B981] pulse-dot" />
                 <span className="text-xs text-[#10B981]">Agent Status: ACTIVE</span>
               </div>
@@ -192,10 +192,10 @@ function FeatureCard({ feature, index }: { feature: typeof features[0]; index: n
               <div className="relative w-16 h-16">
                 <svg className="w-16 h-16 -rotate-90" viewBox="0 0 36 36">
                   <circle cx="18" cy="18" r="14" fill="none" stroke="#111118" strokeWidth="3" />
-                  <motion.circle 
-                    cx="18" cy="18" r="14" fill="none" 
+                  <motion.circle
+                    cx="18" cy="18" r="14" fill="none"
                     stroke={feature.color}
-                    strokeWidth="3" 
+                    strokeWidth="3"
                     strokeLinecap="round"
                     strokeDasharray="88"
                     initial={{ strokeDashoffset: 88 }}
@@ -216,7 +216,7 @@ function FeatureCard({ feature, index }: { feature: typeof features[0]; index: n
               <span className="text-2xl font-bold" style={{ color: feature.color }}>
                 {metricValue}
               </span>
-              <span className="text-sm text-[#6B7280] ml-1">{feature.metricLabel}</span>
+              <span className="text-sm text-gray-500 ml-1">{feature.metricLabel}</span>
             </div>
           )}
 
@@ -224,9 +224,9 @@ function FeatureCard({ feature, index }: { feature: typeof features[0]; index: n
           {feature.tags && (
             <div className="flex flex-wrap gap-2 mt-4">
               {feature.tags.map((tag) => (
-                <span 
+                <span
                   key={tag}
-                  className="text-xs px-3 py-1.5 rounded-full bg-[#0a0a0f] text-[#9CA3AF] border border-[var(--border-subtle)]"
+                  className="text-xs px-3 py-1.5 rounded-full bg-gray-50 text-gray-500 border border-[var(--border-subtle)]"
                 >
                   {tag}
                 </span>
@@ -241,11 +241,12 @@ function FeatureCard({ feature, index }: { feature: typeof features[0]; index: n
 
 export function Features() {
   return (
-    <section id="features" className="py-24 md:py-32 relative overflow-hidden bg-[#050505]">
+    <section id="features" className="py-24 md:py-32 relative overflow-hidden bg-[#F3F4F6]">
       {/* Background */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/3 left-0 w-[400px] h-[400px] rounded-full bg-[#00F0FF]/5 blur-[150px]" />
-        <div className="absolute bottom-1/3 right-0 w-[400px] h-[400px] rounded-full bg-[#8B5CF6]/5 blur-[150px]" />
+        <div className="absolute top-1/3 left-0 w-[400px] h-[400px] rounded-full bg-[#0EA5E9]/10 blur-[150px]" />
+        <div className="absolute bottom-1/3 right-0 w-[400px] h-[400px] rounded-full bg-[#8B5CF6]/10 blur-[150px]" />
+        <div className="absolute top-2/3 left-1/2 w-[300px] h-[300px] rounded-full bg-[#EC4899]/8 blur-[150px]" />
       </div>
 
       <div className="container mx-auto px-6 lg:px-8 relative">
@@ -257,13 +258,13 @@ export function Features() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#00F0FF] mb-4 block">
+          <span className="font-mono text-xs uppercase tracking-[0.3em] text-[#111827] mb-4 block">
             CAPABILITIES
           </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#F9FAFB] mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
             Your AI Agent&apos;s Toolkit
           </h2>
-          <p className="text-[#9CA3AF] max-w-xl mx-auto">
+          <p className="text-gray-500 max-w-xl mx-auto">
             Every feature designed to maximize your interview rate
           </p>
         </motion.div>

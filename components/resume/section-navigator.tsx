@@ -60,8 +60,8 @@ function SectionItem({ section, isActive, onClick, count, hasAI }: SectionItemPr
       dragControls={controls}
       className={`group relative flex items-center gap-3 p-3 rounded-lg cursor-pointer transition-all duration-200 ${
         isActive 
-          ? "bg-[rgba(0,240,255,0.08)] border-l-2 border-l-[#00F0FF]" 
-          : "hover:bg-[rgba(0,240,255,0.05)] border-l-2 border-l-transparent"
+          ? "bg-[rgba(17,24,39,0.08)] border-l-2 border-l-[#111827]" 
+          : "hover:bg-[rgba(17,24,39,0.05)] border-l-2 border-l-transparent"
       } ${!section.isVisible ? "opacity-50" : ""}`}
       onClick={onClick}
     >
@@ -70,24 +70,24 @@ function SectionItem({ section, isActive, onClick, count, hasAI }: SectionItemPr
         onPointerDown={(e) => controls.start(e)}
         className="cursor-grab active:cursor-grabbing opacity-0 group-hover:opacity-100 transition-opacity"
       >
-        <GripVertical className="w-4 h-4 text-[#6B7280]" />
+        <GripVertical className="w-4 h-4 text-gray-500" />
       </motion.div>
 
       {/* Icon */}
       <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
-        isActive ? "bg-[rgba(0,240,255,0.2)]" : "bg-[rgba(255,255,255,0.05)]"
+        isActive ? "bg-[rgba(17,24,39,0.2)]" : "bg-[rgba(0,0,0,0.05)]"
       }`}>
-        <Icon className={`w-4 h-4 ${isActive ? "text-[#00F0FF]" : "text-[#9CA3AF]"}`} />
+        <Icon className={`w-4 h-4 ${isActive ? "text-[#111827]" : "text-gray-500"}`} />
       </div>
 
       {/* Name & Status */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <span className={`text-sm font-medium truncate ${isActive ? "text-white" : "text-[#E5E7EB]"}`}>
+          <span className={`text-sm font-medium truncate ${isActive ? "text-gray-900" : "text-gray-700"}`}>
             {section.title}
           </span>
           {hasAI && (
-            <Sparkles className="w-3 h-3 text-[#00F0FF]" />
+            <Sparkles className="w-3 h-3 text-[#111827]" />
           )}
         </div>
         <div className="flex items-center gap-2 mt-0.5">
@@ -97,7 +97,7 @@ function SectionItem({ section, isActive, onClick, count, hasAI }: SectionItemPr
             </span>
           )}
           {itemCount !== undefined && itemCount > 0 && (
-            <span className="text-[10px] text-[#6B7280]">
+            <span className="text-[10px] text-gray-500">
               {itemCount} {itemCount === 1 ? "entry" : "entries"}
             </span>
           )}
@@ -111,12 +111,12 @@ function SectionItem({ section, isActive, onClick, count, hasAI }: SectionItemPr
             e.stopPropagation()
             toggleSectionVisibility(section.id)
           }}
-          className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-[rgba(255,255,255,0.1)] rounded"
+          className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-[rgba(0,0,0,0.1)] rounded"
         >
           {section.isVisible ? (
-            <Eye className="w-4 h-4 text-[#6B7280]" />
+            <Eye className="w-4 h-4 text-gray-500" />
           ) : (
-            <EyeOff className="w-4 h-4 text-[#6B7280]" />
+            <EyeOff className="w-4 h-4 text-gray-500" />
           )}
         </button>
       )}
@@ -140,7 +140,7 @@ export function SectionNavigator() {
     >
       {/* Section List */}
       <div className="flex-1 overflow-y-auto p-4">
-        <h3 className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider mb-3">
+        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
           Sections
         </h3>
         <Reorder.Group
@@ -164,7 +164,7 @@ export function SectionNavigator() {
         <div className="mt-4 relative">
           <button
             onClick={() => setIsAddSectionOpen(!isAddSectionOpen)}
-            className="w-full flex items-center justify-center gap-2 p-3 rounded-lg border border-dashed border-[var(--border-subtle)] text-[#6B7280] hover:text-[#00F0FF] hover:border-[#00F0FF] transition-all group"
+            className="w-full flex items-center justify-center gap-2 p-3 rounded-lg border border-dashed border-[var(--border-subtle)] text-gray-500 hover:text-[#111827] hover:border-[#111827] transition-all group"
           >
             <Plus className="w-4 h-4" />
             <span className="text-sm font-medium">Add Section</span>
@@ -186,10 +186,10 @@ export function SectionNavigator() {
                       reorderSections([...visibleSections, { ...section, isVisible: true }])
                       setIsAddSectionOpen(false)
                     }}
-                    className="w-full flex items-center gap-3 p-3 hover:bg-[rgba(0,240,255,0.05)] transition-colors text-left"
+                    className="w-full flex items-center gap-3 p-3 hover:bg-[rgba(17,24,39,0.05)] transition-colors text-left"
                   >
-                    <Icon className="w-4 h-4 text-[#9CA3AF]" />
-                    <span className="text-sm text-[#E5E7EB]">{section.title}</span>
+                    <Icon className="w-4 h-4 text-gray-500" />
+                    <span className="text-sm text-gray-700">{section.title}</span>
                   </button>
                 )
               })}
@@ -207,8 +207,8 @@ export function SectionNavigator() {
           className="border-t border-[var(--border-subtle)] p-4"
         >
           <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="w-4 h-4 text-[#00F0FF]" />
-            <span className="text-xs font-semibold text-[#00F0FF]">AI Suggestions</span>
+            <Sparkles className="w-4 h-4 text-[#111827]" />
+            <span className="text-xs font-semibold text-[#111827]">AI Suggestions</span>
           </div>
           <div className="space-y-2 max-h-48 overflow-y-auto">
             {suggestions.map((suggestion, index) => (
@@ -217,11 +217,11 @@ export function SectionNavigator() {
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.1 * index }}
-                className="p-2 rounded-lg bg-[rgba(0,240,255,0.05)] border border-[rgba(0,240,255,0.1)]"
+                className="p-2 rounded-lg bg-[rgba(17,24,39,0.05)] border border-[rgba(17,24,39,0.1)]"
               >
-                <p className="text-xs text-[#9CA3AF] leading-relaxed">{suggestion.message}</p>
+                <p className="text-xs text-gray-500 leading-relaxed">{suggestion.message}</p>
                 {suggestion.action && (
-                  <button className="mt-2 text-xs text-[#00F0FF] hover:underline">
+                  <button className="mt-2 text-xs text-[#111827] hover:underline">
                     {suggestion.action}
                   </button>
                 )}

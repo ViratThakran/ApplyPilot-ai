@@ -68,9 +68,9 @@ function StatItem({ value, suffix, label, delay, icon, color }: StatItemProps) {
           className="text-4xl md:text-5xl font-extrabold gradient-text-white"
           animate={isInView ? { 
             textShadow: [
-              "0 0 20px rgba(255,255,255,0)",
-              "0 0 30px rgba(255,255,255,0.2)",
-              "0 0 20px rgba(255,255,255,0)"
+              "0 0 20px rgba(0,0,0,0)",
+              "0 0 30px rgba(0,0,0,0.2)",
+              "0 0 20px rgba(0,0,0,0)"
             ]
           } : {}}
           transition={{ duration: 2, repeat: Infinity, delay: delay + 1 }}
@@ -80,7 +80,7 @@ function StatItem({ value, suffix, label, delay, icon, color }: StatItemProps) {
       </div>
       
       {/* Label */}
-      <p className="mt-3 text-[#6B7280] text-xs uppercase tracking-widest font-medium">
+      <p className="mt-3 text-gray-500 text-xs uppercase tracking-widest font-medium">
         {label}
       </p>
     </motion.div>
@@ -89,22 +89,22 @@ function StatItem({ value, suffix, label, delay, icon, color }: StatItemProps) {
 
 export function Stats() {
   const stats = [
-    { value: 2.4, suffix: "M+", label: "Applications Delivered", icon: <Send className="w-5 h-5" />, color: "#00F0FF" },
+    { value: 2.4, suffix: "M+", label: "Applications Delivered", icon: <Send className="w-5 h-5" />, color: "#111827" },
     { value: 87, suffix: "%", label: "Interview Conversion", icon: <TrendingUp className="w-5 h-5" />, color: "#10B981" },
     { value: 14000, suffix: "+", label: "Jobs Applied Today", icon: <Briefcase className="w-5 h-5" />, color: "#8B5CF6" },
     { value: 4.9, suffix: "/5", label: "User Satisfaction", icon: <Star className="w-5 h-5" />, color: "#D4AF37" },
   ]
 
   return (
-    <section className="py-16 md:py-20 relative overflow-hidden bg-[#0a0a0f] border-y border-[var(--border-subtle)]">
+    <section className="py-16 md:py-20 relative overflow-hidden bg-[#F3F4F6] border-y border-[var(--border-subtle)]">
       {/* Animated grid background */}
       <div className="absolute inset-0 opacity-[0.03]">
         <div 
           className="absolute inset-0"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+              linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)
             `,
             backgroundSize: '50px 50px'
           }}

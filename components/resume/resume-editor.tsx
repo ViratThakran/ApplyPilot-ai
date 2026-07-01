@@ -26,14 +26,14 @@ function PersonalInfoEditor() {
       <div className="flex items-start gap-6">
         <div 
           onClick={() => fileInputRef.current?.click()}
-          className="w-28 h-28 rounded-full border-2 border-dashed border-[var(--border-subtle)] flex flex-col items-center justify-center cursor-pointer hover:border-[#00F0FF] transition-colors group relative overflow-hidden"
+          className="w-28 h-28 rounded-full border-2 border-dashed border-[var(--border-subtle)] flex flex-col items-center justify-center cursor-pointer hover:border-[#111827] transition-colors group relative overflow-hidden"
         >
           {personalInfo.photo ? (
             <img src={personalInfo.photo} alt="Profile" className="w-full h-full object-cover" />
           ) : (
             <>
-              <Camera className="w-6 h-6 text-[#6B7280] group-hover:text-[#00F0FF] transition-colors" />
-              <span className="text-xs text-[#6B7280] mt-1 group-hover:text-[#00F0FF]">Upload</span>
+              <Camera className="w-6 h-6 text-gray-500 group-hover:text-[#111827] transition-colors" />
+              <span className="text-xs text-gray-500 mt-1 group-hover:text-[#111827]">Upload</span>
             </>
           )}
           <input 
@@ -60,14 +60,14 @@ function PersonalInfoEditor() {
               value={personalInfo.firstName}
               onChange={(e) => updatePersonalInfo("firstName", e.target.value)}
               placeholder="First Name"
-              className="flex-1 bg-transparent border-b border-[var(--border-subtle)] focus:border-[#00F0FF] text-2xl font-bold text-white placeholder:text-[#4B5563] outline-none pb-2 transition-colors"
+              className="flex-1 bg-transparent border-b border-[var(--border-subtle)] focus:border-[#111827] text-2xl font-bold text-gray-900 placeholder:text-gray-400 outline-none pb-2 transition-colors"
             />
             <input
               type="text"
               value={personalInfo.lastName}
               onChange={(e) => updatePersonalInfo("lastName", e.target.value)}
               placeholder="Last Name"
-              className="flex-1 bg-transparent border-b border-[var(--border-subtle)] focus:border-[#00F0FF] text-2xl font-bold text-white placeholder:text-[#4B5563] outline-none pb-2 transition-colors"
+              className="flex-1 bg-transparent border-b border-[var(--border-subtle)] focus:border-[#111827] text-2xl font-bold text-gray-900 placeholder:text-gray-400 outline-none pb-2 transition-colors"
             />
           </div>
 
@@ -77,7 +77,7 @@ function PersonalInfoEditor() {
             value={personalInfo.title}
             onChange={(e) => updatePersonalInfo("title", e.target.value)}
             placeholder="Professional Title (e.g. Senior Product Manager)"
-            className="w-full bg-transparent border-b border-[var(--border-subtle)] focus:border-[#00F0FF] text-lg text-[#9CA3AF] placeholder:text-[#4B5563] outline-none pb-2 transition-colors"
+            className="w-full bg-transparent border-b border-[var(--border-subtle)] focus:border-[#111827] text-lg text-gray-500 placeholder:text-gray-400 outline-none pb-2 transition-colors"
           />
         </div>
       </div>
@@ -154,8 +154,8 @@ function ContactInput({
   }
 
   return (
-    <div className="flex items-center gap-3 p-3 rounded-lg bg-[rgba(255,255,255,0.02)] border border-[var(--border-subtle)] focus-within:border-[#00F0FF] transition-colors group">
-      <Icon className="w-5 h-5 text-[#6B7280] group-focus-within:text-[#00F0FF] transition-colors" />
+    <div className="flex items-center gap-3 p-3 rounded-lg bg-[rgba(0,0,0,0.02)] border border-[var(--border-subtle)] focus-within:border-[#111827] transition-colors group">
+      <Icon className="w-5 h-5 text-gray-500 group-focus-within:text-[#111827] transition-colors" />
       <input
         type={type}
         value={value}
@@ -165,7 +165,7 @@ function ContactInput({
         }}
         onBlur={(e) => validate(e.target.value)}
         placeholder={placeholder}
-        className="flex-1 bg-transparent text-sm text-white placeholder:text-[#4B5563] outline-none"
+        className="flex-1 bg-transparent text-sm text-gray-900 placeholder:text-gray-400 outline-none"
       />
       {isValid !== null && (
         <motion.div
@@ -205,7 +205,7 @@ function SummaryEditor() {
           onFocus={() => setShowAIToolbar(true)}
           onBlur={() => setTimeout(() => setShowAIToolbar(false), 200)}
           placeholder="Write a compelling professional summary that highlights your key achievements and career goals..."
-          className="w-full h-40 bg-[rgba(255,255,255,0.02)] border border-[var(--border-subtle)] focus:border-[#00F0FF] rounded-lg p-4 text-white placeholder:text-[#4B5563] outline-none resize-none transition-colors"
+          className="w-full h-40 bg-[rgba(0,0,0,0.02)] border border-[var(--border-subtle)] focus:border-[#111827] rounded-lg p-4 text-gray-900 placeholder:text-gray-400 outline-none resize-none transition-colors"
         />
 
         {/* AI Toolbar */}
@@ -217,21 +217,21 @@ function SummaryEditor() {
               exit={{ opacity: 0, y: 10 }}
               className="absolute -bottom-2 left-4 right-4 transform translate-y-full flex items-center gap-2 p-2 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-lg shadow-xl z-10"
             >
-              <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[rgba(0,240,255,0.1)] text-[#00F0FF] text-xs font-medium hover:bg-[rgba(0,240,255,0.2)] transition-colors">
+              <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[rgba(17,24,39,0.1)] text-[#111827] text-xs font-medium hover:bg-[rgba(17,24,39,0.2)] transition-colors">
                 <Sparkles className="w-3 h-3" />
                 Rewrite with AI
               </button>
-              <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[#9CA3AF] text-xs font-medium hover:bg-[rgba(255,255,255,0.05)] transition-colors">
+              <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-gray-500 text-xs font-medium hover:bg-[rgba(0,0,0,0.05)] transition-colors">
                 Optimize for Job
               </button>
-              <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[#9CA3AF] text-xs font-medium hover:bg-[rgba(255,255,255,0.05)] transition-colors">
+              <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-gray-500 text-xs font-medium hover:bg-[rgba(0,0,0,0.05)] transition-colors">
                 Keyword Boost
               </button>
               <div className="ml-auto flex items-center gap-2">
                 <span className={`text-xs ${wordCount < 50 || wordCount > 200 ? "text-[#F59E0B]" : "text-[#10B981]"}`}>
                   {wordCount} words
                 </span>
-                <span className="text-xs text-[#6B7280]">Ideal: 50-200</span>
+                <span className="text-xs text-gray-500">Ideal: 50-200</span>
               </div>
             </motion.div>
           )}
@@ -281,7 +281,7 @@ function ExperienceEditor() {
 
       <button
         onClick={handleAddExperience}
-        className="w-full flex items-center justify-center gap-2 p-4 rounded-lg border border-dashed border-[var(--border-subtle)] text-[#6B7280] hover:text-[#00F0FF] hover:border-[#00F0FF] transition-all group"
+        className="w-full flex items-center justify-center gap-2 p-4 rounded-lg border border-dashed border-[var(--border-subtle)] text-gray-500 hover:text-[#111827] hover:border-[#111827] transition-all group"
       >
         <Plus className="w-5 h-5" />
         <span className="font-medium">Add Work Experience</span>
@@ -306,26 +306,26 @@ function ExperienceCard({
   return (
     <motion.div
       layout
-      className="bg-[rgba(255,255,255,0.02)] border border-[var(--border-subtle)] rounded-lg overflow-hidden"
+      className="bg-[rgba(0,0,0,0.02)] border border-[var(--border-subtle)] rounded-lg overflow-hidden"
     >
       {/* Header - Always Visible */}
       <div 
-        className="flex items-center gap-4 p-4 cursor-pointer hover:bg-[rgba(255,255,255,0.02)] transition-colors"
+        className="flex items-center gap-4 p-4 cursor-pointer hover:bg-[rgba(0,0,0,0.02)] transition-colors"
         onClick={onToggle}
       >
-        <GripVertical className="w-5 h-5 text-[#4B5563] cursor-grab" />
+        <GripVertical className="w-5 h-5 text-gray-400 cursor-grab" />
         <div className="w-10 h-10 rounded-lg bg-[rgba(139,92,246,0.2)] flex items-center justify-center">
           <Building2 className="w-5 h-5 text-[#8B5CF6]" />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="font-semibold text-white truncate">
+          <div className="font-semibold text-gray-900 truncate">
             {experience.company || "Company Name"}
           </div>
-          <div className="text-sm text-[#9CA3AF] truncate">
+          <div className="text-sm text-gray-500 truncate">
             {experience.role || "Job Title"}
           </div>
         </div>
-        <div className="text-sm text-[#6B7280] font-mono">
+        <div className="text-sm text-gray-500 font-mono">
           {experience.startDate || "Start"} — {experience.endDate || "End"}
         </div>
         <button
@@ -333,14 +333,14 @@ function ExperienceCard({
             e.stopPropagation()
             onRemove()
           }}
-          className="p-2 text-[#6B7280] hover:text-[#F43F5E] transition-colors"
+          className="p-2 text-gray-500 hover:text-[#F43F5E] transition-colors"
         >
           <Trash2 className="w-4 h-4" />
         </button>
         {isExpanded ? (
-          <ChevronUp className="w-5 h-5 text-[#6B7280]" />
+          <ChevronUp className="w-5 h-5 text-gray-500" />
         ) : (
-          <ChevronDown className="w-5 h-5 text-[#6B7280]" />
+          <ChevronDown className="w-5 h-5 text-gray-500" />
         )}
       </div>
 
@@ -361,36 +361,36 @@ function ExperienceCard({
                   value={experience.company}
                   onChange={(e) => onUpdate({ company: e.target.value })}
                   placeholder="Company Name"
-                  className="bg-[rgba(255,255,255,0.02)] border border-[var(--border-subtle)] rounded-lg px-4 py-2.5 text-white placeholder:text-[#4B5563] outline-none focus:border-[#00F0FF] transition-colors"
+                  className="bg-[rgba(0,0,0,0.02)] border border-[var(--border-subtle)] rounded-lg px-4 py-2.5 text-gray-900 placeholder:text-gray-400 outline-none focus:border-[#111827] transition-colors"
                 />
                 <input
                   type="text"
                   value={experience.role}
                   onChange={(e) => onUpdate({ role: e.target.value })}
                   placeholder="Job Title"
-                  className="bg-[rgba(255,255,255,0.02)] border border-[var(--border-subtle)] rounded-lg px-4 py-2.5 text-white placeholder:text-[#4B5563] outline-none focus:border-[#00F0FF] transition-colors"
+                  className="bg-[rgba(0,0,0,0.02)] border border-[var(--border-subtle)] rounded-lg px-4 py-2.5 text-gray-900 placeholder:text-gray-400 outline-none focus:border-[#111827] transition-colors"
                 />
               </div>
 
               <div className="grid grid-cols-3 gap-4">
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-[#6B7280]" />
+                  <Calendar className="w-4 h-4 text-gray-500" />
                   <input
                     type="text"
                     value={experience.startDate}
                     onChange={(e) => onUpdate({ startDate: e.target.value })}
                     placeholder="Start Date"
-                    className="flex-1 bg-[rgba(255,255,255,0.02)] border border-[var(--border-subtle)] rounded-lg px-3 py-2 text-sm text-white placeholder:text-[#4B5563] outline-none focus:border-[#00F0FF] transition-colors"
+                    className="flex-1 bg-[rgba(0,0,0,0.02)] border border-[var(--border-subtle)] rounded-lg px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-[#111827] transition-colors"
                   />
                 </div>
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-[#6B7280]" />
+                  <Calendar className="w-4 h-4 text-gray-500" />
                   <input
                     type="text"
                     value={experience.endDate}
                     onChange={(e) => onUpdate({ endDate: e.target.value })}
                     placeholder="End Date or Present"
-                    className="flex-1 bg-[rgba(255,255,255,0.02)] border border-[var(--border-subtle)] rounded-lg px-3 py-2 text-sm text-white placeholder:text-[#4B5563] outline-none focus:border-[#00F0FF] transition-colors"
+                    className="flex-1 bg-[rgba(0,0,0,0.02)] border border-[var(--border-subtle)] rounded-lg px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-[#111827] transition-colors"
                   />
                 </div>
                 <input
@@ -398,22 +398,22 @@ function ExperienceCard({
                   value={experience.location}
                   onChange={(e) => onUpdate({ location: e.target.value })}
                   placeholder="Location"
-                  className="bg-[rgba(255,255,255,0.02)] border border-[var(--border-subtle)] rounded-lg px-4 py-2 text-sm text-white placeholder:text-[#4B5563] outline-none focus:border-[#00F0FF] transition-colors"
+                  className="bg-[rgba(0,0,0,0.02)] border border-[var(--border-subtle)] rounded-lg px-4 py-2 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-[#111827] transition-colors"
                 />
               </div>
 
               {/* Achievements */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-[#9CA3AF]">Key Achievements</span>
-                  <button className="flex items-center gap-1 text-xs text-[#00F0FF] hover:underline">
+                  <span className="text-sm font-medium text-gray-500">Key Achievements</span>
+                  <button className="flex items-center gap-1 text-xs text-[#111827] hover:underline">
                     <Sparkles className="w-3 h-3" />
                     AI Enhance All
                   </button>
                 </div>
                 {experience.achievements.map((achievement, index) => (
                   <div key={index} className="flex items-start gap-2">
-                    <span className="text-[#00F0FF] mt-2.5">•</span>
+                    <span className="text-[#111827] mt-2.5">•</span>
                     <input
                       type="text"
                       value={achievement}
@@ -423,16 +423,16 @@ function ExperienceCard({
                         onUpdate({ achievements: newAchievements })
                       }}
                       placeholder="Describe an achievement with metrics..."
-                      className="flex-1 bg-[rgba(255,255,255,0.02)] border border-[var(--border-subtle)] rounded-lg px-4 py-2 text-sm text-white placeholder:text-[#4B5563] outline-none focus:border-[#00F0FF] transition-colors"
+                      className="flex-1 bg-[rgba(0,0,0,0.02)] border border-[var(--border-subtle)] rounded-lg px-4 py-2 text-sm text-gray-900 placeholder:text-gray-400 outline-none focus:border-[#111827] transition-colors"
                     />
-                    <button className="p-2 text-[#6B7280] hover:text-[#00F0FF] transition-colors">
+                    <button className="p-2 text-gray-500 hover:text-[#111827] transition-colors">
                       <Sparkles className="w-4 h-4" />
                     </button>
                   </div>
                 ))}
                 <button
                   onClick={() => onUpdate({ achievements: [...experience.achievements, ""] })}
-                  className="text-sm text-[#6B7280] hover:text-[#00F0FF] transition-colors flex items-center gap-1"
+                  className="text-sm text-gray-500 hover:text-[#111827] transition-colors flex items-center gap-1"
                 >
                   <Plus className="w-4 h-4" />
                   Add achievement
@@ -471,7 +471,7 @@ function EducationEditor() {
       {resume.education.map((edu) => (
         <div
           key={edu.id}
-          className="bg-[rgba(255,255,255,0.02)] border border-[var(--border-subtle)] rounded-lg p-4 space-y-4"
+          className="bg-[rgba(0,0,0,0.02)] border border-[var(--border-subtle)] rounded-lg p-4 space-y-4"
         >
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-3">
@@ -484,7 +484,7 @@ function EducationEditor() {
                   value={edu.institution}
                   onChange={(e) => updateEducation(edu.id, { institution: e.target.value })}
                   placeholder="Institution Name"
-                  className="bg-transparent font-semibold text-white placeholder:text-[#4B5563] outline-none"
+                  className="bg-transparent font-semibold text-gray-900 placeholder:text-gray-400 outline-none"
                 />
                 <div className="flex gap-2">
                   <input
@@ -492,22 +492,22 @@ function EducationEditor() {
                     value={edu.degree}
                     onChange={(e) => updateEducation(edu.id, { degree: e.target.value })}
                     placeholder="Degree"
-                    className="bg-transparent text-sm text-[#9CA3AF] placeholder:text-[#4B5563] outline-none"
+                    className="bg-transparent text-sm text-gray-500 placeholder:text-gray-400 outline-none"
                   />
-                  <span className="text-[#4B5563]">in</span>
+                  <span className="text-gray-400">in</span>
                   <input
                     type="text"
                     value={edu.field}
                     onChange={(e) => updateEducation(edu.id, { field: e.target.value })}
                     placeholder="Field of Study"
-                    className="bg-transparent text-sm text-[#9CA3AF] placeholder:text-[#4B5563] outline-none"
+                    className="bg-transparent text-sm text-gray-500 placeholder:text-gray-400 outline-none"
                   />
                 </div>
               </div>
             </div>
             <button
               onClick={() => removeEducation(edu.id)}
-              className="p-2 text-[#6B7280] hover:text-[#F43F5E] transition-colors"
+              className="p-2 text-gray-500 hover:text-[#F43F5E] transition-colors"
             >
               <Trash2 className="w-4 h-4" />
             </button>
@@ -518,22 +518,22 @@ function EducationEditor() {
               value={edu.startDate}
               onChange={(e) => updateEducation(edu.id, { startDate: e.target.value })}
               placeholder="Start Year"
-              className="bg-[rgba(255,255,255,0.02)] border border-[var(--border-subtle)] rounded px-3 py-1.5 text-[#9CA3AF] placeholder:text-[#4B5563] outline-none focus:border-[#00F0FF] w-24"
+              className="bg-[rgba(0,0,0,0.02)] border border-[var(--border-subtle)] rounded px-3 py-1.5 text-gray-500 placeholder:text-gray-400 outline-none focus:border-[#111827] w-24"
             />
-            <span className="text-[#4B5563] py-1.5">—</span>
+            <span className="text-gray-400 py-1.5">—</span>
             <input
               type="text"
               value={edu.endDate}
               onChange={(e) => updateEducation(edu.id, { endDate: e.target.value })}
               placeholder="End Year"
-              className="bg-[rgba(255,255,255,0.02)] border border-[var(--border-subtle)] rounded px-3 py-1.5 text-[#9CA3AF] placeholder:text-[#4B5563] outline-none focus:border-[#00F0FF] w-24"
+              className="bg-[rgba(0,0,0,0.02)] border border-[var(--border-subtle)] rounded px-3 py-1.5 text-gray-500 placeholder:text-gray-400 outline-none focus:border-[#111827] w-24"
             />
             <input
               type="text"
               value={edu.gpa || ""}
               onChange={(e) => updateEducation(edu.id, { gpa: e.target.value })}
               placeholder="GPA (optional)"
-              className="bg-[rgba(255,255,255,0.02)] border border-[var(--border-subtle)] rounded px-3 py-1.5 text-[#9CA3AF] placeholder:text-[#4B5563] outline-none focus:border-[#00F0FF] w-28"
+              className="bg-[rgba(0,0,0,0.02)] border border-[var(--border-subtle)] rounded px-3 py-1.5 text-gray-500 placeholder:text-gray-400 outline-none focus:border-[#111827] w-28"
             />
           </div>
         </div>
@@ -541,7 +541,7 @@ function EducationEditor() {
 
       <button
         onClick={handleAddEducation}
-        className="w-full flex items-center justify-center gap-2 p-4 rounded-lg border border-dashed border-[var(--border-subtle)] text-[#6B7280] hover:text-[#00F0FF] hover:border-[#00F0FF] transition-all"
+        className="w-full flex items-center justify-center gap-2 p-4 rounded-lg border border-dashed border-[var(--border-subtle)] text-gray-500 hover:text-[#111827] hover:border-[#111827] transition-all"
       >
         <Plus className="w-5 h-5" />
         <span className="font-medium">Add Education</span>
@@ -589,23 +589,23 @@ function SkillsEditor() {
           onChange={(e) => setNewSkill(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleAddSkill()}
           placeholder="Type a skill and press Enter..."
-          className="flex-1 bg-[rgba(255,255,255,0.02)] border border-[var(--border-subtle)] rounded-lg px-4 py-2.5 text-white placeholder:text-[#4B5563] outline-none focus:border-[#00F0FF] transition-colors"
+          className="flex-1 bg-[rgba(0,0,0,0.02)] border border-[var(--border-subtle)] rounded-lg px-4 py-2.5 text-gray-900 placeholder:text-gray-400 outline-none focus:border-[#111827] transition-colors"
         />
         <button
           onClick={handleAddSkill}
-          className="px-4 py-2.5 bg-[#00F0FF] text-[#050505] rounded-lg font-medium hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-all"
+          className="px-4 py-2.5 bg-[#111827] text-white rounded-lg font-medium hover:shadow-[0_0_20px_rgba(17,24,39,0.4)] transition-all"
         >
           Add
         </button>
       </div>
 
       {/* AI Suggestions */}
-      <div className="flex items-center gap-2 p-3 rounded-lg bg-[rgba(0,240,255,0.05)] border border-[rgba(0,240,255,0.1)]">
-        <Sparkles className="w-4 h-4 text-[#00F0FF]" />
-        <span className="text-sm text-[#9CA3AF]">
-          Suggested: <span className="text-[#00F0FF] cursor-pointer hover:underline">React</span>,{" "}
-          <span className="text-[#00F0FF] cursor-pointer hover:underline">TypeScript</span>,{" "}
-          <span className="text-[#00F0FF] cursor-pointer hover:underline">Node.js</span>
+      <div className="flex items-center gap-2 p-3 rounded-lg bg-[rgba(17,24,39,0.05)] border border-[rgba(17,24,39,0.1)]">
+        <Sparkles className="w-4 h-4 text-[#111827]" />
+        <span className="text-sm text-gray-500">
+          Suggested: <span className="text-[#111827] cursor-pointer hover:underline">React</span>,{" "}
+          <span className="text-[#111827] cursor-pointer hover:underline">TypeScript</span>,{" "}
+          <span className="text-[#111827] cursor-pointer hover:underline">Node.js</span>
         </span>
       </div>
 
@@ -616,7 +616,7 @@ function SkillsEditor() {
 
         return (
           <div key={category} className="space-y-2">
-            <h4 className="text-sm font-medium text-[#6B7280]">{categoryLabels[category]}</h4>
+            <h4 className="text-sm font-medium text-gray-500">{categoryLabels[category]}</h4>
             <div className="flex flex-wrap gap-2">
               {skills.map((skill) => (
                 <motion.div
@@ -624,14 +624,14 @@ function SkillsEditor() {
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   exit={{ scale: 0 }}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[rgba(0,240,255,0.1)] border border-[rgba(0,240,255,0.2)] group"
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[rgba(17,24,39,0.1)] border border-[rgba(17,24,39,0.2)] group"
                 >
-                  <span className="text-sm text-white">{skill.name}</span>
+                  <span className="text-sm text-gray-900">{skill.name}</span>
                   <button
                     onClick={() => removeSkill(skill.id)}
                     className="opacity-0 group-hover:opacity-100 transition-opacity"
                   >
-                    <X className="w-3 h-3 text-[#6B7280] hover:text-[#F43F5E]" />
+                    <X className="w-3 h-3 text-gray-500 hover:text-[#F43F5E]" />
                   </button>
                 </motion.div>
               ))}
@@ -641,7 +641,7 @@ function SkillsEditor() {
       })}
 
       {resume.skills.length === 0 && (
-        <div className="text-center py-8 text-[#6B7280]">
+        <div className="text-center py-8 text-gray-500">
           <p>No skills added yet. Start typing above to add skills.</p>
         </div>
       )}
@@ -684,7 +684,7 @@ export function ResumeEditor() {
           key={activeSection}
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-2xl font-bold text-white mb-6"
+          className="text-2xl font-bold text-gray-900 mb-6"
         >
           {sectionTitles[activeSection] || "Section"}
         </motion.h2>
@@ -698,7 +698,7 @@ export function ResumeEditor() {
             transition={{ duration: 0.3 }}
           >
             {sectionComponents[activeSection] || (
-              <div className="text-center py-12 text-[#6B7280]">
+              <div className="text-center py-12 text-gray-500">
                 <p>This section editor is coming soon.</p>
               </div>
             )}
